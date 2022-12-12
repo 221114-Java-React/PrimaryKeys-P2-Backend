@@ -4,6 +4,8 @@ import com.revature.sylvester.dtos.requests.NewLoginRequest;
 import com.revature.sylvester.dtos.requests.NewUserRequest;
 import com.revature.sylvester.dtos.responses.Principal;
 import com.revature.sylvester.entities.User;
+import com.revature.sylvester.entities.UserProfile;
+import com.revature.sylvester.repositories.UserProfileRepository;
 import com.revature.sylvester.repositories.UserRepository;
 import com.revature.sylvester.utils.custom_exceptions.InvalidAuthException;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class UserService {
     public User signup(NewUserRequest req) {
         User createdUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword1(),
                 req.getEmail(), new Date(), true, null);
+
         userRepo.save(createdUser);
         return createdUser;
     }

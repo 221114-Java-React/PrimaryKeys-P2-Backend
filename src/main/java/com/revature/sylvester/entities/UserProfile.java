@@ -1,13 +1,51 @@
 package com.revature.sylvester.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user_profiles")
 public class UserProfile {
+    @Id
     private String profileId;
+
+    @Column(name = "display_name")
     private String displayName;
+
+    @Column(name = "location")
     private String location;
+
+    @Column(name = "birth_date")
     private String birthDate;
+
+    @Column(name = "occupation")
     private String occupation;
+
+    @Column(name = "bio")
     private String bio;
+
+    @OneToOne
+    @JoinColumn(
+            name = "user_id",
+            nullable = false
+    )
+    @JsonBackReference // child
     private String userId;
+
+    public UserProfile() {
+        super();
+    }
+
+    public UserProfile(String profileId, String displayName, String location, String birthDate, String occupation,
+                       String bio) {
+        this.profileId = profileId;
+        this.displayName = displayName;
+        this.location = location;
+        this.birthDate = birthDate;
+        this.occupation = occupation;
+        this.bio = bio;
+    }
 
     public UserProfile(String profileId, String displayName, String location, String birthDate, String occupation,
                        String bio, String userId) {
