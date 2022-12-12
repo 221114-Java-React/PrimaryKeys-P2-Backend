@@ -9,6 +9,7 @@ public class Principal {
     private Date registered;
     private boolean isActive;
     private String roleId;
+    private String token;
 
     public Principal() {
         super();
@@ -71,6 +72,14 @@ public class Principal {
         this.roleId = roleId;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public String toString() {
         return "Principal{" +
@@ -80,6 +89,7 @@ public class Principal {
                 ", registered=" + registered +
                 ", isActive=" + isActive +
                 ", roleId='" + roleId + '\'' +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

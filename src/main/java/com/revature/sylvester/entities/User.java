@@ -1,20 +1,49 @@
 package com.revature.sylvester.entities;
 
-import javax.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-//@Table(name = "users")
+@Table(name = "users")
 public class User {
+    @Id
     private String userId;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "registered")
     private Date registered;
+
+    @Column(name = "is_active")
     private boolean isActive;
+
+    @Column(name = "role_id")
     private String roleId;
 
-    public User(String userId, String username, String password, String email, Date registered, boolean isActive, String roleId) {
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            mappedBy = "user"
+    )
+    @JsonManagedReference // parent
+    private List<Post> posts;
+
+    public User() {
+        super();
+    }
+
+    public User(String userId, String username, String password, String email, Date registered, boolean isActive,
+                String roleId) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -22,6 +51,18 @@ public class User {
         this.registered = registered;
         this.isActive = isActive;
         this.roleId = roleId;
+    }
+
+    public User(String userId, String username, String password, String email, Date registered, boolean isActive,
+                String roleId, List<Post> posts) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.registered = registered;
+        this.isActive = isActive;
+        this.roleId = roleId;
+        this.posts = posts;
     }
 
     public String getUserId() {

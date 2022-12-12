@@ -1,20 +1,50 @@
 package com.revature.sylvester.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "posts")
 public class Post {
+    @Id
     private String postId;
-    private Date posted;
-    private String content;
-    private String imgUrl;
-    private String userId;
 
-    public Post(String postId, Date posted, String content, String imgUrl, String userId) {
+    @Column(name = "posted")
+    private Date posted;
+
+    @Column(name = "content")
+    private String content;
+
+    @Column(name = "img_url")
+    private String imgUrl;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "user_id",
+            nullable = false
+    )
+    @JsonBackReference // child
+    private User user;
+
+    public Post() {
+        super();
+    }
+
+    public Post(String postId, Date posted, String content, String imgUrl) {
         this.postId = postId;
         this.posted = posted;
         this.content = content;
         this.imgUrl = imgUrl;
-        this.userId = userId;
+    }
+
+    public Post(String postId, Date posted, String content, String imgUrl, User user) {
+        this.postId = postId;
+        this.posted = posted;
+        this.content = content;
+        this.imgUrl = imgUrl;
+        this.user = user;
     }
 
     public String getPostId() {
@@ -49,12 +79,12 @@ public class Post {
         this.imgUrl = imgUrl;
     }
 
-    public String getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -64,7 +94,7 @@ public class Post {
                 ", posted=" + posted +
                 ", content='" + content + '\'' +
                 ", imgUrl='" + imgUrl + '\'' +
-                ", userId='" + userId + '\'' +
+                ", user=" + user +
                 '}';
     }
 }

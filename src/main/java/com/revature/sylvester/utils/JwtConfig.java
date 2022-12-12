@@ -1,6 +1,7 @@
 package com.revature.sylvester.utils;
 
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.security.Key;
 import java.util.Properties;
 
+@Component
 public class JwtConfig {
     private final int expiration = 60 * 60 * 1000;
     private final SignatureAlgorithm sigAlg = SignatureAlgorithm.HS256;

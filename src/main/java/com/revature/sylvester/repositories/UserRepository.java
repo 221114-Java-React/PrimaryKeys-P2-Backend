@@ -13,4 +13,7 @@ public interface UserRepository extends CrudRepository<User, String> {
     User findByUsernameAndPassword(String username, String password);
 
     List<User> findAllByUsername(String username);
+
+    @Query(value = "SELECT (username) FROM users WHERE username = ?1", nativeQuery = true)
+    List<String> findAllUsernames(String username);
 }
