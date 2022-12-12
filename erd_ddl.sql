@@ -8,7 +8,7 @@ SET search_path TO p2;
 
 CREATE table user_roles (
 	role_id VARCHAR(255) primary key,
-	role VARCHAR(255) unique --not null
+	role VARCHAR(255) unique not null
 );
 
 CREATE table users (
@@ -28,7 +28,7 @@ CREATE table user_profiles (
 	birth_date DATE not null,
 	occupation VARCHAR(255),
 	bio VARCHAR(255),
-	user_id VARCHAR(255) not null REFERENCES users(user_id) --unique
+	user_id VARCHAR(255) unique not null REFERENCES users(user_id)
 );
 
 CREATE table following_relationships (
