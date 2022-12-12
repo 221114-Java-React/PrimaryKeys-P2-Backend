@@ -1,11 +1,13 @@
 package com.revature.sylvester.services;
 
-import com.revature.sylvester.daos.UserDAO;
+import com.revature.sylvester.repositories.UserRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
-    private final UserDAO userDAO;
+    private final UserRepository userRepo;
 
-    public UserService(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserService(UserRepository userRepo) {
+        this.userRepo = userRepo;
     }
 }

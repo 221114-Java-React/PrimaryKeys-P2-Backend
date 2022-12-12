@@ -1,32 +1,35 @@
-package com.revature.sylvester.models;
+package com.revature.sylvester.entities;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
+@Entity
+//@Table(name = "users")
 public class User {
-    private String user_id;
+    private String userId;
     private String username;
     private String password;
     private String email;
     private Date registered;
-    private boolean is_active;
-    private String role_id;
+    private boolean isActive;
+    private String roleId;
 
-    public User(String user_id, String username, String password, String email, Date registered, boolean is_active, String role_id) {
-        this.user_id = user_id;
+    public User(String userId, String username, String password, String email, Date registered, boolean isActive, String roleId) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
         this.registered = registered;
-        this.is_active = is_active;
-        this.role_id = role_id;
+        this.isActive = isActive;
+        this.roleId = roleId;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -61,32 +64,32 @@ public class User {
         this.registered = registered;
     }
 
-    public boolean isIs_active() {
-        return is_active;
+    public boolean isActive() {
+        return isActive;
     }
 
-    public void setIs_active(boolean is_active) {
-        this.is_active = is_active;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
-    public String getRole_id() {
-        return role_id;
+    public String getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(String role_id) {
-        this.role_id = role_id;
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "user_id='" + user_id + '\'' +
+                "userId='" + userId + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", registered=" + registered +
-                ", is_active=" + is_active +
-                ", role_id='" + role_id + '\'' +
+                ", isActive=" + isActive +
+                ", roleId='" + roleId + '\'' +
                 '}';
     }
 }

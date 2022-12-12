@@ -1,11 +1,11 @@
-package com.revature.sylvester.handlers;
+package com.revature.sylvester.controllers;
 
 import com.revature.sylvester.services.PostService;
 
-public class PostHandler {
+public class PostController {
     private final PostService postService;
 
-    public PostHandler(PostService postService) {
+    public PostController(PostService postService) {
         this.postService = postService;
     }
 }

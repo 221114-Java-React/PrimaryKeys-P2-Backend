@@ -1,11 +1,8 @@
 package com.revature.sylvester.services;
 
-import com.revature.sylvester.daos.PostDAO;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PostService {
-    private final PostDAO postDAO;
 
-    public PostService(PostDAO postDAO) {
-        this.postDAO = postDAO;
-    }
 }
