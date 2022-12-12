@@ -1,26 +1,26 @@
-package com.revature.sylvester.models;
+package com.revature.sylvester.entities;
 
 import java.util.Date;
 
 public class Reply {
-    private String reply_id;
+    private String replyId;
     private Date replied;
     private String user_id;
     private String reply;
 
-    public Reply(String reply_id, Date replied, String user_id, String reply) {
-        this.reply_id = reply_id;
+    public Reply(String replyId, Date replied, String user_id, String reply) {
+        this.replyId = replyId;
         this.replied = replied;
         this.user_id = user_id;
         this.reply = reply;
     }
 
-    public String getReply_id() {
-        return reply_id;
+    public String getReplyId() {
+        return replyId;
     }
 
-    public void setReply_id(String reply_id) {
-        this.reply_id = reply_id;
+    public void setReplyId(String replyId) {
+        this.replyId = replyId;
     }
 
     public Date getReplied() {
@@ -50,7 +50,7 @@ public class Reply {
     @Override
     public String toString() {
         return "Reply{" +
-                "reply_id='" + reply_id + '\'' +
+                "replyId='" + replyId + '\'' +
                 ", replied=" + replied +
                 ", user_id='" + user_id + '\'' +
                 ", reply='" + reply + '\'' +
