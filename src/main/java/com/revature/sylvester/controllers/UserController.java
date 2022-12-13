@@ -1,5 +1,7 @@
 package com.revature.sylvester.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.sylvester.dtos.requests.NewUserRequest;
 import com.revature.sylvester.entities.User;
 import com.revature.sylvester.services.TokenService;
 import com.revature.sylvester.services.UserService;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
     private final TokenService tokenService;
@@ -19,6 +21,33 @@ public class UserController {
     public UserController(UserService userService, TokenService tokenService) {
         this.userService = userService;
         this.tokenService = tokenService;
+    }
+
+    @PostMapping
+    public User signup(@RequestBody NewUserRequest req) {
+        User createdUser;
+
+        if(userService.isValidUsername(req.getUsername())) {
+            if(!userService.isDuplicateUsername(req.getUsername())) {
+                if(userService.isValidPassword(req.getPassword1())) {
+                    if(userService.isSamePassword(req.getPassword1(), req.getPassword2())) {
+                        if(userService.isValidEmail(req.getEmail())) {
+                            if(!userService.isDuplicateEmail(req.getEmail()))
+                                createdUser = userService.signup(req);
+                            else
+                                throw new InvalidUserException("Email address is already taken");
+                        } else
+                            throw new InvalidUserException("Invalid email address");
+                    } else
+                        throw new InvalidUserException("Passwords do not match");
+                } else
+                    throw new InvalidUserException("Invalid password");
+            } else
+                throw new InvalidUserException("Username is already taken");
+        } else
+            throw new InvalidUserException("Invalid username");
+
+        return createdUser;
     }
 
     @GetMapping

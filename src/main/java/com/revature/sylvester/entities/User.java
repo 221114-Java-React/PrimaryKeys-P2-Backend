@@ -3,6 +3,7 @@ package com.revature.sylvester.entities;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -12,27 +13,35 @@ public class User {
     @Id
     private String userId;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "registered")
-    private Date registered;
+    @Column(name = "registered", nullable = false)
+    private LocalDate registered;
 
-    @Column(name = "is_active")
+    @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
     @Column(name = "role_id")
     private String roleId;
 
-    @OneToMany(
+    @OneToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
+            mappedBy = "user"
+    )
+    @JsonManagedReference // parent
+    private UserProfile profile;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
             mappedBy = "user"
     )
     @JsonManagedReference // parent
@@ -42,7 +51,7 @@ public class User {
         super();
     }
 
-    public User(String userId, String username, String password, String email, Date registered, boolean isActive,
+    public User(String userId, String username, String password, String email, LocalDate registered, boolean isActive,
                 String roleId) {
         this.userId = userId;
         this.username = username;
@@ -53,7 +62,19 @@ public class User {
         this.roleId = roleId;
     }
 
-    public User(String userId, String username, String password, String email, Date registered, boolean isActive,
+    public User(String userId, String username, String password, String email, LocalDate registered, boolean isActive,
+                String roleId, UserProfile profile) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.registered = registered;
+        this.isActive = isActive;
+        this.roleId = roleId;
+        this.profile = profile;
+    }
+
+    public User(String userId, String username, String password, String email, LocalDate registered, boolean isActive,
                 String roleId, List<Post> posts) {
         this.userId = userId;
         this.username = username;
@@ -97,11 +118,11 @@ public class User {
         this.email = email;
     }
 
-    public Date getRegistered() {
+    public LocalDate getRegistered() {
         return registered;
     }
 
-    public void setRegistered(Date registered) {
+    public void setRegistered(LocalDate registered) {
         this.registered = registered;
     }
 

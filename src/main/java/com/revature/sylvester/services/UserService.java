@@ -4,10 +4,13 @@ import com.revature.sylvester.dtos.requests.NewLoginRequest;
 import com.revature.sylvester.dtos.requests.NewUserRequest;
 import com.revature.sylvester.dtos.responses.Principal;
 import com.revature.sylvester.entities.User;
+import com.revature.sylvester.entities.UserProfile;
+import com.revature.sylvester.repositories.UserProfileRepository;
 import com.revature.sylvester.repositories.UserRepository;
 import com.revature.sylvester.utils.custom_exceptions.InvalidAuthException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +25,8 @@ public class UserService {
 
     public User signup(NewUserRequest req) {
         User createdUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword1(),
-                req.getEmail(), new Date(), true, null);
+                req.getEmail(), LocalDate.now(), true, null);
+
         userRepo.save(createdUser);
         return createdUser;
     }
@@ -46,22 +50,28 @@ public class UserService {
     }
 
     public boolean isValidUsername(String username) {
-        return username.matches("/(^|[^@\\w])@(\\w{1,15})\\b/\n"); // conforms to Twitter's username specs
-        // https://help.twitter.com/en/managing-your-account/twitter-username-rules#error
+        return username.matches("^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$");
     }
 
     public boolean isDuplicateUsername(String username) {
-        List<String> usernames = userRepo.findAllUsernames(username);
+        List<String> usernames = userRepo.findAllUsernames();
         return usernames.contains(username);
     }
 
     public boolean isValidPassword(String password) {
-        return password.matches("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$/");
-        // conforms to Twitter's password suggestions
-        // https://help.twitter.com/en/safety-and-security/account-security-tips
+        return password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
     }
 
     public boolean isSamePassword(String password1, String password2) {
         return password1.equals(password2);
+    }
+
+    public boolean isValidEmail(String email) {
+        return email.matches("^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*$");
+    }
+
+    public boolean isDuplicateEmail(String email) {
+        List<String> emails = userRepo.findAllEmails();
+        return emails.contains(email);
     }
 }

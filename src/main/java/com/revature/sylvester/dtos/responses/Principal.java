@@ -1,12 +1,12 @@
 package com.revature.sylvester.dtos.responses;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Principal {
     private String userId;
     private String username;
     private String email;
-    private Date registered;
+    private LocalDate registered;
     private boolean isActive;
     private String roleId;
     private String token;
@@ -15,7 +15,7 @@ public class Principal {
         super();
     }
 
-    public Principal(String userId, String username, String email, Date registered, boolean isActive, String roleId) {
+    public Principal(String userId, String username, String email, LocalDate registered, boolean isActive, String roleId) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -48,11 +48,11 @@ public class Principal {
         this.email = email;
     }
 
-    public Date getRegistered() {
+    public LocalDate getRegistered() {
         return registered;
     }
 
-    public void setRegistered(Date registered) {
+    public void setRegistered(LocalDate registered) {
         this.registered = registered;
     }
 
