@@ -16,7 +16,8 @@ public class InvalidAuthException extends RuntimeException {
         super(cause);
     }
 
-    public InvalidAuthException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public InvalidAuthException(String message, Throwable cause, boolean enableSuppression,
+                                boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

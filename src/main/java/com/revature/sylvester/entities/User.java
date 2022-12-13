@@ -30,9 +30,17 @@ public class User {
     @Column(name = "role_id")
     private String roleId;
 
-    @OneToMany(
+    @OneToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
+            mappedBy = "user"
+    )
+    @JsonManagedReference // parent
+    private UserProfile profile;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
             mappedBy = "user"
     )
     @JsonManagedReference // parent
@@ -51,6 +59,18 @@ public class User {
         this.registered = registered;
         this.isActive = isActive;
         this.roleId = roleId;
+    }
+
+    public User(String userId, String username, String password, String email, Date registered, boolean isActive,
+                String roleId, UserProfile profile) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.registered = registered;
+        this.isActive = isActive;
+        this.roleId = roleId;
+        this.profile = profile;
     }
 
     public User(String userId, String username, String password, String email, Date registered, boolean isActive,

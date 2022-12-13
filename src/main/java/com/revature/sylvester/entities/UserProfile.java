@@ -3,6 +3,7 @@ package com.revature.sylvester.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "user_profiles")
@@ -17,7 +18,7 @@ public class UserProfile {
     private String location;
 
     @Column(name = "birth_date")
-    private String birthDate;
+    private Date birthDate;
 
     @Column(name = "occupation")
     private String occupation;
@@ -31,13 +32,13 @@ public class UserProfile {
             nullable = false
     )
     @JsonBackReference // child
-    private String userId;
+    private User user;
 
     public UserProfile() {
         super();
     }
 
-    public UserProfile(String profileId, String displayName, String location, String birthDate, String occupation,
+    public UserProfile(String profileId, String displayName, String location, Date birthDate, String occupation,
                        String bio) {
         this.profileId = profileId;
         this.displayName = displayName;
@@ -47,15 +48,15 @@ public class UserProfile {
         this.bio = bio;
     }
 
-    public UserProfile(String profileId, String displayName, String location, String birthDate, String occupation,
-                       String bio, String userId) {
+    public UserProfile(String profileId, String displayName, String location, Date birthDate, String occupation,
+                       String bio, User user) {
         this.profileId = profileId;
         this.displayName = displayName;
         this.location = location;
         this.birthDate = birthDate;
         this.occupation = occupation;
         this.bio = bio;
-        this.userId = userId;
+        this.user = user;
     }
 
     public String getProfileId() {
@@ -82,11 +83,11 @@ public class UserProfile {
         this.location = location;
     }
 
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -106,12 +107,12 @@ public class UserProfile {
         this.bio = bio;
     }
 
-    public String getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -123,7 +124,7 @@ public class UserProfile {
                 ", birthDate='" + birthDate + '\'' +
                 ", occupation='" + occupation + '\'' +
                 ", bio='" + bio + '\'' +
-                ", userId='" + userId + '\'' +
+                ", user=" + user +
                 '}';
     }
 }

@@ -67,4 +67,13 @@ public class UserService {
     public boolean isSamePassword(String password1, String password2) {
         return password1.equals(password2);
     }
+
+    public boolean isValidEmail(String email) {
+        return email.matches("^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*$");
+    }
+
+    public boolean isDuplicateEmail(String email) {
+        List<String> emails = userRepo.findAllEmails(email);
+        return emails.contains(email);
+    }
 }
