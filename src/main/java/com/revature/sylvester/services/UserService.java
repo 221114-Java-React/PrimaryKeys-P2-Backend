@@ -59,9 +59,7 @@ public class UserService {
     }
 
     public boolean isValidPassword(String password) {
-        return password.matches("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$/");
-        // conforms to Twitter's password suggestions
-        // https://help.twitter.com/en/safety-and-security/account-security-tips
+        return password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
     }
 
     public boolean isSamePassword(String password1, String password2) {
