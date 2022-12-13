@@ -3,7 +3,6 @@ package com.revature.sylvester.entities;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class User {
     private String email;
 
     @Column(name = "registered", nullable = false)
-    private LocalDate registered;
+    private Date registered;
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
@@ -51,7 +50,7 @@ public class User {
         super();
     }
 
-    public User(String userId, String username, String password, String email, LocalDate registered, boolean isActive,
+    public User(String userId, String username, String password, String email, Date registered, boolean isActive,
                 String roleId) {
         this.userId = userId;
         this.username = username;
@@ -62,7 +61,7 @@ public class User {
         this.roleId = roleId;
     }
 
-    public User(String userId, String username, String password, String email, LocalDate registered, boolean isActive,
+    public User(String userId, String username, String password, String email, Date registered, boolean isActive,
                 String roleId, UserProfile profile) {
         this.userId = userId;
         this.username = username;
@@ -74,8 +73,7 @@ public class User {
         this.profile = profile;
     }
 
-    public User(String userId, String username, String password, String email, LocalDate registered, boolean isActive,
-                String roleId, List<Post> posts) {
+    public User(String userId, String username, String password, String email, Date registered, boolean isActive, String roleId, List<Post> posts) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -118,11 +116,11 @@ public class User {
         this.email = email;
     }
 
-    public LocalDate getRegistered() {
+    public Date getRegistered() {
         return registered;
     }
 
-    public void setRegistered(LocalDate registered) {
+    public void setRegistered(Date registered) {
         this.registered = registered;
     }
 
