@@ -54,7 +54,7 @@ Paul Franklin
 - [Giphy API](https://developers.giphy.com/docs/api/)
 
 # Project Design Specifications and Documents
-link to erd/relational data model
+[Entity Relationship Diagram](img/Sylvester-ERD.jpg)
 
 ### User Stories
 User Stories 
