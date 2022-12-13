@@ -1,5 +1,6 @@
 package com.revature.sylvester.dtos.requests;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class NewUserRequest {
@@ -8,14 +9,14 @@ public class NewUserRequest {
     private String password2;
     private String email;
     private String displayName;
-    private Date birthDate;
+    private LocalDate birthDate;
 
     public NewUserRequest() {
         super();
     }
 
     public NewUserRequest(String username, String password1, String password2, String email, String displayName,
-                          Date birthDate) {
+                          LocalDate birthDate) {
         this.username = username;
         this.password1 = password1;
         this.password2 = password2;
@@ -64,11 +65,11 @@ public class NewUserRequest {
         this.displayName = displayName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

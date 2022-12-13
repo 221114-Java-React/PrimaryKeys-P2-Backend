@@ -7,6 +7,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Service
@@ -45,7 +46,7 @@ public class TokenService {
                     .parseClaimsJws(token)
                     .getBody();
             return new Principal(claims.getId(), claims.getSubject(), claims.get("email", String.class),
-                    claims.get("registered", Date.class), claims.get("is_active", Boolean.class),
+                    claims.get("registered", LocalDate.class), claims.get("is_active", Boolean.class),
                     claims.get("role_id", String.class));
         } catch(Exception e) {
             return null;

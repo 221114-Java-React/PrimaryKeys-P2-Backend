@@ -1,6 +1,5 @@
 package com.revature.sylvester.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.sylvester.dtos.requests.NewUserRequest;
 import com.revature.sylvester.entities.UserProfile;
 import com.revature.sylvester.services.UserProfileService;
@@ -12,18 +11,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/profiles")
 public class UserProfileController {
     private final UserProfileService profileService;
-    private final ObjectMapper mapper;
 
-    public UserProfileController(UserProfileService profileService, ObjectMapper mapper) {
+    public UserProfileController(UserProfileService profileService) {
         this.profileService = profileService;
-        this.mapper = mapper;
     }
 
     @PostMapping
     public UserProfile signup(@RequestBody NewUserRequest req) {
         UserProfile createdProfile;
 
-        createdProfile = profileService.signup(req);
+        if(!profileService.isEmptyDisplayName(req.getDisplayName())) {
+            if(profileService.isValidBirthDate(req.getBirthDate()))
+                createdProfile = profileService.signup(req);
+            else
+                throw new InvalidUserException("Must be 13 years or older to sign up");
+        } else
+            throw new InvalidUserException("Please enter a display name");
 
         return createdProfile;
     }

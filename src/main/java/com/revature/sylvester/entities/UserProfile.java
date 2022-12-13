@@ -3,7 +3,7 @@ package com.revature.sylvester.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "user_profiles")
@@ -11,14 +11,14 @@ public class UserProfile {
     @Id
     private String profileId;
 
-    @Column(name = "display_name")
+    @Column(name = "display_name", nullable = false)
     private String displayName;
 
     @Column(name = "location")
     private String location;
 
-    @Column(name = "birth_date")
-    private Date birthDate;
+    @Column(name = "birth_date", nullable = false)
+    private LocalDate birthDate;
 
     @Column(name = "occupation")
     private String occupation;
@@ -38,7 +38,7 @@ public class UserProfile {
         super();
     }
 
-    public UserProfile(String profileId, String displayName, String location, Date birthDate, String occupation,
+    public UserProfile(String profileId, String displayName, String location, LocalDate birthDate, String occupation,
                        String bio) {
         this.profileId = profileId;
         this.displayName = displayName;
@@ -48,7 +48,7 @@ public class UserProfile {
         this.bio = bio;
     }
 
-    public UserProfile(String profileId, String displayName, String location, Date birthDate, String occupation,
+    public UserProfile(String profileId, String displayName, String location, LocalDate birthDate, String occupation,
                        String bio, User user) {
         this.profileId = profileId;
         this.displayName = displayName;
@@ -83,11 +83,11 @@ public class UserProfile {
         this.location = location;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

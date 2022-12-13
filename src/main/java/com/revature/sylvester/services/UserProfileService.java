@@ -4,13 +4,10 @@ import com.revature.sylvester.dtos.requests.NewUserRequest;
 import com.revature.sylvester.entities.UserProfile;
 import com.revature.sylvester.repositories.UserProfileRepository;
 import com.revature.sylvester.repositories.UserRepository;
-import com.revature.sylvester.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.UUID;
 
 @Service
@@ -36,15 +33,10 @@ public class UserProfileService {
         return displayName.isEmpty();
     }
 
-    public boolean isValidBirthDate(String birthDateStr) {
-        Date birthDate = null;
-        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        formatter.setLenient(false);
-        try {
-            birthDate = formatter.parse(birthDateStr);
-        } catch (ParseException e) {
-            throw new InvalidUserException(e);
-        }
-        return true;
+    public boolean isValidBirthDate(LocalDate birthDate) {
+        LocalDate currentDate = LocalDate.now();
+        int age = Period.between(birthDate, currentDate).getYears();
+
+        return age > 13;
     }
 }

@@ -17,12 +17,10 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final TokenService tokenService;
-    private final ObjectMapper mapper;
 
-    public UserController(UserService userService, TokenService tokenService, ObjectMapper mapper) {
+    public UserController(UserService userService, TokenService tokenService) {
         this.userService = userService;
         this.tokenService = tokenService;
-        this.mapper = mapper;
     }
 
     @PostMapping
