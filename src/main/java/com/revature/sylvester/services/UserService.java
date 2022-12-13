@@ -50,12 +50,11 @@ public class UserService {
     }
 
     public boolean isValidUsername(String username) {
-        return username.matches("/(^|[^@\\w])@(\\w{1,15})\\b/\n"); // conforms to Twitter's username specs
-        // https://help.twitter.com/en/managing-your-account/twitter-username-rules#error
+        return username.matches("^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$");
     }
 
     public boolean isDuplicateUsername(String username) {
-        List<String> usernames = userRepo.findAllUsernames(username);
+        List<String> usernames = userRepo.findAllUsernames();
         return usernames.contains(username);
     }
 
@@ -74,7 +73,7 @@ public class UserService {
     }
 
     public boolean isDuplicateEmail(String email) {
-        List<String> emails = userRepo.findAllEmails(email);
+        List<String> emails = userRepo.findAllEmails();
         return emails.contains(email);
     }
 }
