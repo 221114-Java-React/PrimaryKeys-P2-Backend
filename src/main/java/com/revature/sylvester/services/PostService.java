@@ -2,16 +2,17 @@ package com.revature.sylvester.services;
 
 import com.revature.sylvester.dtos.requests.NewPostRequest;
 import com.revature.sylvester.entities.Post;
-import com.revature.sylvester.entities.User;
 import com.revature.sylvester.repositories.PostRepository;
 import com.revature.sylvester.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class PostService {
     private final PostRepository postRepo;
     private final UserRepository userRepo;
