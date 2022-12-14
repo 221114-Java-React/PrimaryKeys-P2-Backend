@@ -1,6 +1,8 @@
 package com.revature.sylvester;
 
+import com.revature.sylvester.dtos.requests.NewLoginRequest;
 import com.revature.sylvester.dtos.requests.NewUserRequest;
+import com.revature.sylvester.dtos.responses.Principal;
 import com.revature.sylvester.entities.User;
 import com.revature.sylvester.repositories.UserRepository;
 import com.revature.sylvester.services.UserService;
@@ -17,91 +19,13 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 
 public class UserServiceTest {
+    private UserRepository userRepositorySut;
     private UserService userServiceSut;
 
     @Before
     public void init() {
-        userServiceSut = new UserService(new UserRepository() {
-            @Override
-            public User findByUsernameAndPassword(String username, String password) {
-                return null;
-            }
-
-            @Override
-            public List<User> findAllByUsername(String username) {
-                return null;
-            }
-
-            @Override
-            public List<String> findAllUsernames() {
-                return null;
-            }
-
-            @Override
-            public List<String> findAllEmails() {
-                return null;
-            }
-
-            @Override
-            public <S extends User> S save(S entity) {
-                return null;
-            }
-
-            @Override
-            public <S extends User> Iterable<S> saveAll(Iterable<S> entities) {
-                return null;
-            }
-
-            @Override
-            public Optional<User> findById(String s) {
-                return Optional.empty();
-            }
-
-            @Override
-            public boolean existsById(String s) {
-                return false;
-            }
-
-            @Override
-            public Iterable<User> findAll() {
-                return null;
-            }
-
-            @Override
-            public Iterable<User> findAllById(Iterable<String> strings) {
-                return null;
-            }
-
-            @Override
-            public long count() {
-                return 0;
-            }
-
-            @Override
-            public void deleteById(String s) {
-
-            }
-
-            @Override
-            public void delete(User entity) {
-
-            }
-
-            @Override
-            public void deleteAllById(Iterable<? extends String> strings) {
-
-            }
-
-            @Override
-            public void deleteAll(Iterable<? extends User> entities) {
-
-            }
-
-            @Override
-            public void deleteAll() {
-
-            }
-        });
+        userRepositorySut = Mockito.mock(UserRepository.class);
+        userServiceSut = new UserService(userRepositorySut);
     }
 
     @Test
@@ -125,8 +49,28 @@ public class UserServiceTest {
         assertEquals(null,newUser.getRoleId());
     }
 
-//    @Test
-//    public void test_correctLogin_givenRequest()
+    @Test
+    public void test_correctLogin_givenRequest() {
+        // Arrange
+        UserService sut1 = Mockito.spy(userServiceSut);
+        UserRepository sut2 = Mockito.spy(userRepositorySut);
+        NewLoginRequest req = new NewLoginRequest("testUsername", "mRMEY476");
+        User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
+        Principal principal = new Principal("0", "testUsername", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
+
+        Mockito.when(sut2.findByUsernameAndPassword(req.getUsername(), req.getPassword())).thenReturn(user);
+        Mockito.when(sut1.login(req)).thenReturn(principal);
+
+        // Act
+        Principal newPrincipal = sut1.login(req);
+
+        // Assert
+        assertEquals("0",newPrincipal.getUserId());
+        assertEquals("testUsername",newPrincipal.getUsername());
+        assertEquals("testUsername@testUsername.com",newPrincipal.getEmail());
+        assertEquals(new Date(2022,12,13),newPrincipal.getRegistered());
+        assertEquals(null,newPrincipal.getRoleId());
+    }
 
     @Test
     public void test_correctGetAllUsers_givenNothing() {
@@ -191,12 +135,31 @@ public class UserServiceTest {
         assertEquals(null,newUser.getRoleId());
     }
 
-//    @Test
-//    public void test_correctIsDuplicateUsername_givenUsername()
+    @Test
+    public void test_correctIsDuplicateUsername_givenUsername() {
+        // Arrange
+        UserService sut1 = Mockito.spy(userServiceSut);
+        UserRepository sut2 = Mockito.spy(userRepositorySut);
+        List<String> allUsernames = new ArrayList<>();
+        allUsernames.add("testUsername");
+
+        Mockito.when(sut2.findAllUsernames()).thenReturn(allUsernames);
+        Mockito.when(sut1.isDuplicateUsername("testUsername")).thenReturn(true);
+        Mockito.when(sut1.isDuplicateUsername("testUsername2")).thenReturn(false);
+
+        // Act
+        Boolean duplicateUsernameTrue = sut1.isDuplicateUsername("testUsername");
+        Boolean duplicateUsernameFalse = sut1.isDuplicateUsername("testUsername2");
+
+        // Assert
+        assertEquals(true,duplicateUsernameTrue);
+        assertEquals(false,duplicateUsernameFalse);
+    }
 
     @Test
     public void test_correctIsSamePassword_givenPasswords() {
         // Arrange
+        UserService sut = Mockito.spy(userServiceSut);
 
         // Act
         Boolean samePassword = userServiceSut.isSamePassword("mRMEY476","mRMEY476");
@@ -205,6 +168,24 @@ public class UserServiceTest {
         assertEquals(true,samePassword);
     }
 
-//    @Test
-//    public void test_correctIsDuplicateEmail_givenEmail()
+    @Test
+    public void test_correctIsDuplicateEmail_givenEmail() {
+        // Arrange
+        UserService sut1 = Mockito.spy(userServiceSut);
+        UserRepository sut2 = Mockito.spy(userRepositorySut);
+        List<String> allEmails = new ArrayList<>();
+        allEmails.add("testUsername@testUsername.com");
+
+        Mockito.when(sut2.findAllEmails()).thenReturn(allEmails);
+        Mockito.when(sut1.isDuplicateEmail("testUsername@testUsername.com")).thenReturn(true);
+        Mockito.when(sut1.isDuplicateEmail("testUsername2@testUsername2.com")).thenReturn(false);
+
+        // Act
+        Boolean duplicateEmailTrue = sut1.isDuplicateEmail("testUsername@testUsername.com");
+        Boolean duplicateEmailFalse = sut1.isDuplicateEmail("testUsername2@testUsername2.com");
+
+        // Assert
+        assertEquals(true,duplicateEmailTrue);
+        assertEquals(false,duplicateEmailFalse);
+    }
 }
