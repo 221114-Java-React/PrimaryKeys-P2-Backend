@@ -25,7 +25,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void test_correctGetAllPostsByUserId_() {
+    public void test_correctGetAllPostsByUserId_givenUserId() {
         // Arrange
         PostService sut1 = Mockito.spy(postServiceSut);
         PostRepository sut2 = Mockito.spy(postRepositorySut);
