@@ -7,6 +7,7 @@ import com.revature.sylvester.utils.custom_exceptions.InvalidUserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/profiles")
 public class UserProfileController {
