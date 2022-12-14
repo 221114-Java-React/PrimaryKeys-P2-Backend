@@ -26,6 +26,9 @@ public class UserProfile {
     @Column(name = "bio")
     private String bio;
 
+    @Column(name = "profile_pic_url")
+    private String profilePicUrl;
+
     @OneToOne
     @JoinColumn(
             name = "user_id",
@@ -39,23 +42,25 @@ public class UserProfile {
     }
 
     public UserProfile(String profileId, String displayName, String location, LocalDate birthDate, String occupation,
-                       String bio) {
+                       String bio, String profilePicUrl) {
         this.profileId = profileId;
         this.displayName = displayName;
         this.location = location;
         this.birthDate = birthDate;
         this.occupation = occupation;
         this.bio = bio;
+        this.profilePicUrl = profilePicUrl;
     }
 
     public UserProfile(String profileId, String displayName, String location, LocalDate birthDate, String occupation,
-                       String bio, User user) {
+                       String bio, String profilePicUrl, User user) {
         this.profileId = profileId;
         this.displayName = displayName;
         this.location = location;
         this.birthDate = birthDate;
         this.occupation = occupation;
         this.bio = bio;
+        this.profilePicUrl = profilePicUrl;
         this.user = user;
     }
 
@@ -107,6 +112,14 @@ public class UserProfile {
         this.bio = bio;
     }
 
+    public String getProfilePicUrl() {
+        return profilePicUrl;
+    }
+
+    public void setProfilePicUrl(String profilePicUrl) {
+        this.profilePicUrl = profilePicUrl;
+    }
+
     public User getUser() {
         return user;
     }
@@ -121,9 +134,10 @@ public class UserProfile {
                 "profileId='" + profileId + '\'' +
                 ", displayName='" + displayName + '\'' +
                 ", location='" + location + '\'' +
-                ", birthDate='" + birthDate + '\'' +
+                ", birthDate=" + birthDate +
                 ", occupation='" + occupation + '\'' +
                 ", bio='" + bio + '\'' +
+                ", profilePicUrl='" + profilePicUrl + '\'' +
                 ", user=" + user +
                 '}';
     }
