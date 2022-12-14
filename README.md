@@ -1,5 +1,5 @@
 
-# Silvester by Team Primary Keys
+# Sylvester by Team Primary Keys
 **[Frontend Repository Here](https://github.com/221114-Java-React/PrimaryKeys-P2-Frontend)**
 
 ## Problem Statement 

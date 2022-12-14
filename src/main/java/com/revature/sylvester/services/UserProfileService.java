@@ -22,7 +22,7 @@ public class UserProfileService {
 
     public UserProfile signup(NewUserRequest req) {
         UserProfile createdProfile = new UserProfile(UUID.randomUUID().toString(), req.getDisplayName(), null,
-                req.getBirthDate(), null, null);
+                req.getBirthDate(), null, null, null);
 
         createdProfile.setUser(userRepo.findByUsernameAndPassword(req.getUsername(), req.getPassword1()));
         profileRepo.save(createdProfile);
