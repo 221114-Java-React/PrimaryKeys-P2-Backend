@@ -1,14 +1,21 @@
 package com.revature.sylvester.repositories;
 
 import com.revature.sylvester.entities.Post;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface PostRepository extends CrudRepository<Post, String> {
+    @Modifying
+    @Query(value = "INSERT INTO posts(post_id, posted, content, img_url, user_id) VALUES (?1, ?2, ?3, ?4, ?5)",
+            nativeQuery = true)
+    void save(String postId, Date posted, String content, String imgUrl, String userId);
+
     @Query(value = "SELECT * FROM posts WHERE user_id = ?1", nativeQuery = true)
     List<Post> findAllByUserId(String userId);
 }
