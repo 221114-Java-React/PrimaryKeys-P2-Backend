@@ -40,6 +40,10 @@ public class PostService {
         return postRepo.findAllByUserId(userId);
     }
 
+    public List<Post> sortAllPostsByPosted() {
+        return postRepo.sortAllByPosted();
+    }
+
     public boolean isValidContent(String content) {
         return content.length() <= 128;
     }

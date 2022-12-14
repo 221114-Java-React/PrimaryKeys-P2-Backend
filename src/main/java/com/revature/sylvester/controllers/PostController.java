@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -55,6 +56,11 @@ public class PostController {
     @GetMapping("/user")
     public List<Post> getByUserId(@RequestParam String id) {
         return postService.getAllPostsByUserId(id);
+    }
+
+    @GetMapping("/posted")
+    public List<Post> sortAllByPosted() {
+        return postService.sortAllPostsByPosted();
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
