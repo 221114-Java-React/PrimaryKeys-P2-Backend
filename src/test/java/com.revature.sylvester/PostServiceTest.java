@@ -1,17 +1,13 @@
 package com.revature.sylvester;
 
-import com.revature.sylvester.dtos.requests.NewUserRequest;
 import com.revature.sylvester.entities.Post;
 import com.revature.sylvester.entities.User;
 import com.revature.sylvester.repositories.PostRepository;
-import com.revature.sylvester.repositories.UserRepository;
 import com.revature.sylvester.services.PostService;
-import com.revature.sylvester.services.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
