@@ -6,14 +6,12 @@ import com.revature.sylvester.entities.UserProfile;
 import com.revature.sylvester.repositories.UserProfileRepository;
 import com.revature.sylvester.repositories.UserRepository;
 import com.revature.sylvester.services.UserProfileService;
-import com.revature.sylvester.services.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
