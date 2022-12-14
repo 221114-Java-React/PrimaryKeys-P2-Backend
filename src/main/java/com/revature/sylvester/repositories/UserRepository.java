@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, String> {
-    @Query(value = "SELECT * FROM users WHERE username = ?1 AND password ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM users WHERE username = ?1 AND password = ?2", nativeQuery = true)
     User findByUsernameAndPassword(String username, String password);
 
     List<User> findAllByUsername(String username);
