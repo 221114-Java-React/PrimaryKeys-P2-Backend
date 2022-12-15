@@ -32,10 +32,13 @@ public class UserService {
     }
 
     public Principal login(NewLoginRequest req) {
+        if(req.getUsername().isEmpty()||req.getPassword().isEmpty()){
+            throw new InvalidAuthException("Please enter a username and password");
+        }
         User validUser = userRepo.findByUsernameAndPassword(req.getUsername(), req.getPassword());
 
         if(validUser == null)
-            throw new InvalidAuthException();
+            throw new InvalidAuthException("Incorrect username or password");
 
         return new Principal(validUser.getUserId(), validUser.getUsername(), validUser.getEmail(),
                 validUser.getRegistered(), validUser.isActive(), validUser.getRoleId());
