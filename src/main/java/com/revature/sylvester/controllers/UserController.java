@@ -25,16 +25,14 @@ public class UserController {
     }
 
     @PostMapping
-    public User signup(@RequestBody NewUserRequest req) {
-        User createdUser;
-
+    public void signup(@RequestBody NewUserRequest req) {
         if(userService.isValidUsername(req.getUsername())) {
             if(!userService.isDuplicateUsername(req.getUsername())) {
                 if(userService.isValidPassword(req.getPassword1())) {
                     if(userService.isSamePassword(req.getPassword1(), req.getPassword2())) {
                         if(userService.isValidEmail(req.getEmail())) {
                             if(!userService.isDuplicateEmail(req.getEmail()))
-                                createdUser = userService.signup(req);
+                                userService.signup(req);
                             else
                                 throw new InvalidUserException("Email address is already taken");
                         } else
@@ -47,8 +45,6 @@ public class UserController {
                 throw new InvalidUserException("Username is already taken");
         } else
             throw new InvalidUserException("Invalid username");
-
-        return createdUser;
     }
 
     @GetMapping
