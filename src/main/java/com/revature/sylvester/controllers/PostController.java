@@ -26,7 +26,7 @@ public class PostController {
     }
 
     @PostMapping
-    public Post create(@RequestBody NewPostRequest req, HttpServletRequest servReq) {
+    public void create(@RequestBody NewPostRequest req, HttpServletRequest servReq) {
         String token = servReq.getHeader("authorization");
 
         if(token == null || token.isEmpty())
@@ -35,16 +35,14 @@ public class PostController {
         Principal principal = tokenService.extractRequesterDetails(token);
 
         if(principal == null)
-            throw new InvalidAuthException("Please sign in to create a post");
+            throw new InvalidAuthException("Please log in to create a post");
 
         Post createdPost;
 
         if(postService.isValidContent(req.getContent()))
-            createdPost = postService.savePostByUserId(req, principal.getUserId());
+            postService.savePostByUserId(req, principal.getUserId());
         else
             throw new InvalidPostException("Post content must be 128 characters or less");
-
-        return createdPost;
     }
 
     @GetMapping

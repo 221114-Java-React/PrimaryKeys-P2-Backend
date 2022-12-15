@@ -18,7 +18,7 @@ public interface LikeRepository extends CrudRepository<Like, String> {
     void delete(String user_id, String post_id);
 
     @Query(value = "SELECT * FROM likes WHERE user_id = ?1 AND post_id = ?2", nativeQuery = true)
-    Like findByUserAndPostIds(String userId, String post_id);
+    Like findByUserIdAndPostId(String userId, String post_id);
 
     @Query(value = "SELECT * FROM likes WHERE user_id = ?1", nativeQuery = true)
     List<Like> findAllByUserId(String userId);

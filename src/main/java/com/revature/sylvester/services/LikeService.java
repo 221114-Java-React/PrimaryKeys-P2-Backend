@@ -2,8 +2,6 @@ package com.revature.sylvester.services;
 
 import com.revature.sylvester.entities.Like;
 import com.revature.sylvester.repositories.LikeRepository;
-import com.revature.sylvester.repositories.PostRepository;
-import com.revature.sylvester.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,25 +10,21 @@ import java.util.UUID;
 @Service
 public class LikeService {
     private final LikeRepository likeRepo;
-    private final UserRepository userRepo;
-    private final PostRepository postRepo;
 
-    public LikeService(LikeRepository likeRepo, UserRepository userRepo, PostRepository postRepo) {
+    public LikeService(LikeRepository likeRepo) {
         this.likeRepo = likeRepo;
-        this.userRepo = userRepo;
-        this.postRepo = postRepo;
     }
 
-    public Like saveByUserAndPostIds(String userId, String postId) {
-        Like newLike = new Like(UUID.randomUUID().toString());
-        newLike.setUser(userRepo.findByUserId(userId));
-        newLike.setPost(postRepo.findByPostId(postId));
-        likeRepo.save(newLike.getLikeId(), userId, postId);
-        return newLike;
+    public void saveLikeByUserIdAndPostId(String userId, String postId) {
+        likeRepo.save(UUID.randomUUID().toString(), userId, postId);
     }
 
-    public Like getLikeByUserAndPostIds(String userId, String postId) {
-        return likeRepo.findByUserAndPostIds(userId, postId);
+    public void deleteLikeByUserIdAndPostId(String userId, String postId) {
+        likeRepo.delete(userId, postId);
+    }
+
+    public Like getLikeByUserIdAndPostId(String userId, String postId) {
+        return likeRepo.findByUserIdAndPostId(userId, postId);
     }
 
     public List<Like> getAllLikesByUserId(String userId) {
@@ -42,7 +36,7 @@ public class LikeService {
     }
 
     public boolean isLiked(String userId, String postId) {
-        Like validLike = likeRepo.findByUserAndPostIds(userId, postId);
+        Like validLike = likeRepo.findByUserIdAndPostId(userId, postId);
 
         return validLike != null;
     }

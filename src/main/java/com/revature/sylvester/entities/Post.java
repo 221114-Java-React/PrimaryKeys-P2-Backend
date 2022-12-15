@@ -49,12 +49,13 @@ public class Post {
         this.imgUrl = imgUrl;
     }
 
-    public Post(String postId, Date posted, String content, String imgUrl, User user) {
+    public Post(String postId, Date posted, String content, String imgUrl, User user, List<Like> likes) {
         this.postId = postId;
         this.posted = posted;
         this.content = content;
         this.imgUrl = imgUrl;
         this.user = user;
+        this.likes = likes;
     }
 
     public String getPostId() {
@@ -97,6 +98,14 @@ public class Post {
         this.user = user;
     }
 
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -105,6 +114,7 @@ public class Post {
                 ", content='" + content + '\'' +
                 ", imgUrl='" + imgUrl + '\'' +
                 ", user=" + user +
+                ", likes=" + likes +
                 '}';
     }
 }

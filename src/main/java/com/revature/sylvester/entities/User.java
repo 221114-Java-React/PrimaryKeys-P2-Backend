@@ -70,7 +70,7 @@ public class User {
     }
 
     public User(String userId, String username, String password, String email, Date registered, boolean isActive,
-                String roleId, UserProfile profile) {
+                String roleId, UserProfile profile, List<Post> posts, List<Like> likes) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -79,18 +79,8 @@ public class User {
         this.isActive = isActive;
         this.roleId = roleId;
         this.profile = profile;
-    }
-
-    public User(String userId, String username, String password, String email, Date registered, boolean isActive,
-                String roleId, List<Post> posts) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.registered = registered;
-        this.isActive = isActive;
-        this.roleId = roleId;
         this.posts = posts;
+        this.likes = likes;
     }
 
     public String getUserId() {
@@ -149,6 +139,30 @@ public class User {
         this.roleId = roleId;
     }
 
+    public UserProfile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(UserProfile profile) {
+        this.profile = profile;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -159,6 +173,9 @@ public class User {
                 ", registered=" + registered +
                 ", isActive=" + isActive +
                 ", roleId='" + roleId + '\'' +
+                ", profile=" + profile +
+                ", posts=" + posts +
+                ", likes=" + likes +
                 '}';
     }
 }
