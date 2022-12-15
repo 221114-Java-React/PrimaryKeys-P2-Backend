@@ -49,6 +49,29 @@ public class UserServiceTest {
     }
 
     @Test
+    public void test_correctActivate_givenRequest() {
+        // Arrange
+        UserService sut1 = Mockito.spy(userServiceSut);
+        UserRepository sut2 = Mockito.spy(userRepositorySut);
+        NewUserRequest req = new NewUserRequest("testUsername", "mRMEY476", "mRMEY476", "testUsername@testUsername.com", "testDisplayName", LocalDate.of(2022,12,13));
+        User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
+
+        Mockito.when(sut2.findByUsernameAndPassword(req.getUsername(), req.getPassword1())).thenReturn(user);
+        Mockito.when(sut1.activate(req)).thenReturn(user);
+
+        // Act
+        User newUser = sut1.activate(req);
+
+        // Assert
+        assertEquals("0",newUser.getUserId());
+        assertEquals("testUsername",newUser.getUsername());
+        assertEquals("mRMEY476",newUser.getPassword());
+        assertEquals("testUsername@testUsername.com",newUser.getEmail());
+        assertEquals(new Date(2022,12,13),newUser.getRegistered());
+        assertEquals(null,newUser.getRoleId());
+    }
+
+    @Test
     public void test_correctLogin_givenRequest() {
         // Arrange
         UserService sut1 = Mockito.spy(userServiceSut);
