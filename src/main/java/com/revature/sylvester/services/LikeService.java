@@ -25,10 +25,6 @@ public class LikeService {
         likeRepo.delete(userId, postId);
     }
 
-    public Like getLikeByUserIdAndPostId(String userId, String postId) {
-        return likeRepo.findByUserIdAndPostId(userId, postId);
-    }
-
     public List<Like> getAllLikesByUserId(String userId) {
         return likeRepo.findAllByUserId(userId);
     }
