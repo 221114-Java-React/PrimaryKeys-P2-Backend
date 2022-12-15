@@ -3,7 +3,6 @@ package com.revature.sylvester.services;
 import com.revature.sylvester.dtos.requests.NewPostRequest;
 import com.revature.sylvester.entities.Post;
 import com.revature.sylvester.repositories.PostRepository;
-import com.revature.sylvester.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,21 +14,14 @@ import java.util.UUID;
 @Transactional
 public class PostService {
     private final PostRepository postRepo;
-    private final UserRepository userRepo;
 
-    public PostService(PostRepository postRepo, UserRepository userRepo) {
+    public PostService(PostRepository postRepo) {
         this.postRepo = postRepo;
-        this.userRepo = userRepo;
     }
 
-    public Post savePostByUserId(NewPostRequest req, String userId) {
-        Post createdPost = new Post(UUID.randomUUID().toString(), new Date(), req.getContent(), req.getImgUrl());
-        createdPost.setUser(userRepo.findByUserId(userId));
-
-        postRepo.save(createdPost.getPostId(), createdPost.getPosted(), createdPost.getContent(),
-                createdPost.getImgUrl(), userId);
-
-        return createdPost;
+    public void savePostByUserId(NewPostRequest req, String userId) {
+        postRepo.save(UUID.randomUUID().toString(), new Date(), req.getContent(),
+                req.getImgUrl(), userId);
     }
 
     public List<Post> getAllPosts() {
