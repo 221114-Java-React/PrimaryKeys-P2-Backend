@@ -37,8 +37,6 @@ public class PostController {
         if(principal == null)
             throw new InvalidAuthException("Please log in to create a post");
 
-        Post createdPost;
-
         if(postService.isValidContent(req.getContent()))
             postService.savePostByUserId(req, principal.getUserId());
         else
