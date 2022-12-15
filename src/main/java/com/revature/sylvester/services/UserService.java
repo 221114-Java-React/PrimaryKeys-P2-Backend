@@ -35,7 +35,7 @@ public class UserService {
         User validUser = userRepo.findByUsernameAndPassword(req.getUsername(), req.getPassword());
 
         if(validUser == null)
-            throw new InvalidAuthException();
+            throw new InvalidAuthException("Incorrect username or password");
 
         return new Principal(validUser.getUserId(), validUser.getUsername(), validUser.getEmail(),
                 validUser.getRegistered(), validUser.isActive(), validUser.getRoleId());
