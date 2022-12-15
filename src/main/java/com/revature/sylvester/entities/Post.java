@@ -1,9 +1,11 @@
 package com.revature.sylvester.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -27,6 +29,14 @@ public class Post {
     )
     @JsonBackReference // child
     private User user;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "post"
+    )
+    @JsonManagedReference // parent
+    private List<Like> likes;
 
     public Post() {
         super();

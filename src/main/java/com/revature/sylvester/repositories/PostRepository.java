@@ -11,6 +11,9 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends CrudRepository<Post, String> {
+    @Query(value = "SELECT * FROM users WHERE post_id = ?1", nativeQuery = true)
+    Post findByPostId(String post_id);
+
     @Modifying
     @Query(value = "INSERT INTO posts(post_id, posted, content, img_url, user_id) VALUES (?1, ?2, ?3, ?4, ?5)",
             nativeQuery = true)

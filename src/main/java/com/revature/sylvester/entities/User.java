@@ -46,6 +46,14 @@ public class User {
     @JsonManagedReference // parent
     private List<Post> posts;
 
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "user"
+    )
+    @JsonManagedReference // parent
+    private List<Like> likes;
+
     public User() {
         super();
     }
@@ -73,7 +81,8 @@ public class User {
         this.profile = profile;
     }
 
-    public User(String userId, String username, String password, String email, Date registered, boolean isActive, String roleId, List<Post> posts) {
+    public User(String userId, String username, String password, String email, Date registered, boolean isActive,
+                String roleId, List<Post> posts) {
         this.userId = userId;
         this.username = username;
         this.password = password;
