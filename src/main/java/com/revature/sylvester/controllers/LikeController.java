@@ -57,6 +57,9 @@ public class LikeController {
         if(principal == null)
             throw new InvalidAuthException("You are not logged in");
 
+        if(!principal.isActive())
+            throw new InvalidAuthException("Your account is not active");
+
         String userId = principal.getUserId();
 
         if(likeService.isLiked(userId, id))

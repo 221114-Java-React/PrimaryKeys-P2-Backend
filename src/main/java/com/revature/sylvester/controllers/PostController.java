@@ -37,6 +37,9 @@ public class PostController {
         if(principal == null)
             throw new InvalidAuthException("Please log in to create a post");
 
+        if(!principal.isActive())
+            throw new InvalidAuthException("Your account is not active");
+
         if(postService.isValidContent(req.getContent()))
             postService.savePostByUserId(req, principal.getUserId());
         else
