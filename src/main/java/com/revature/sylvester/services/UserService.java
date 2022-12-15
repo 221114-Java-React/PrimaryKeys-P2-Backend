@@ -25,10 +25,16 @@ public class UserService {
 
     public User signup(NewUserRequest req) {
         User createdUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword1(),
-                req.getEmail(), new Date(), true, null);
+                req.getEmail(), new Date(), false, null);
 
         userRepo.save(createdUser);
         return createdUser;
+    }
+
+    public User activate(NewUserRequest req) {
+        User activeUser = userRepo.findByUsernameAndPassword(req.getUsername(), req.getPassword1());
+        activeUser.setActive(true);
+        return activeUser;
     }
 
     public Principal login(NewLoginRequest req) {
