@@ -28,19 +28,19 @@ public class UserProfileServiceTest {
     }
 
     @Test
-    public void test_correctSignup_givenRequest() {
+    public void test_correctCreateProfile_givenRequest() {
         // Arrange
         UserProfileService sut1 = Mockito.spy(userProfileServiceSut);
         UserRepository sut2 = Mockito.spy(userRepositorySut);
         NewUserRequest req = new NewUserRequest("testUsername", "mRMEY476", "mRMEY476", "testUsername@testUsername.com", "testDisplayName", LocalDate.of(2022,12,13));
         User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
-        UserProfile userProfile = new UserProfile("0", req.getDisplayName(), null, req.getBirthDate(), null, null);
+        UserProfile userProfile = new UserProfile("0", req.getDisplayName(), null, req.getBirthDate(), null, null, null, user);
 
         Mockito.when(sut2.findByUsernameAndPassword(req.getUsername(), req.getPassword1())).thenReturn(user);
-        Mockito.when(sut1.signup(req)).thenReturn(userProfile);
+        Mockito.when(sut1.createProfile(req, user)).thenReturn(userProfile);
 
         // Act
-        UserProfile newUserProfile = sut1.signup(req);
+        UserProfile newUserProfile = sut1.createProfile(req, user);
 
         // Assert
         assertEquals("0",newUserProfile.getProfileId());
@@ -49,6 +49,49 @@ public class UserProfileServiceTest {
         assertEquals(req.getBirthDate(),newUserProfile.getBirthDate());
         assertEquals(null,newUserProfile.getOccupation());
         assertEquals(null,newUserProfile.getBio());
+        assertEquals(null,newUserProfile.getProfilePicUrl());
+
+        User newUser = newUserProfile.getUser();
+
+        assertEquals("0",newUser.getUserId());
+        assertEquals("testUsername",newUser.getUsername());
+        assertEquals("mRMEY476",newUser.getPassword());
+        assertEquals("testUsername@testUsername.com",newUser.getEmail());
+        assertEquals(new Date(2022,12,13),newUser.getRegistered());
+        assertEquals(null,newUser.getRoleId());
+    }
+
+    @Test
+    public void test_correctGetProfileByUserId_givenUserId() {
+        // Arrange
+        UserProfileService sut1 = Mockito.spy(userProfileServiceSut);
+        UserProfileRepository sut3 = Mockito.spy(userProfileRepositorySut);
+        User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
+        UserProfile userProfile = new UserProfile("0", "testDisplayName", null, LocalDate.of(2022,12,13), null, null, null, user);
+
+        Mockito.when(sut3.findByUserId("0")).thenReturn(userProfile);
+        Mockito.when(sut1.getProfileByUserId("0")).thenReturn(userProfile);
+
+        // Act
+        UserProfile newUserProfile = sut1.getProfileByUserId("0");
+
+        // Assert
+        assertEquals("0",newUserProfile.getProfileId());
+        assertEquals("testDisplayName",newUserProfile.getDisplayName());
+        assertEquals(null,newUserProfile.getLocation());
+        assertEquals(LocalDate.of(2022,12,13),newUserProfile.getBirthDate());
+        assertEquals(null,newUserProfile.getOccupation());
+        assertEquals(null,newUserProfile.getBio());
+        assertEquals(null,newUserProfile.getProfilePicUrl());
+
+        User newUser = newUserProfile.getUser();
+
+        assertEquals("0",newUser.getUserId());
+        assertEquals("testUsername",newUser.getUsername());
+        assertEquals("mRMEY476",newUser.getPassword());
+        assertEquals("testUsername@testUsername.com",newUser.getEmail());
+        assertEquals(new Date(2022,12,13),newUser.getRegistered());
+        assertEquals(null,newUser.getRoleId());
     }
 
     @Test
