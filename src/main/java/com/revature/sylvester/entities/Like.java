@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "likes")
 public class Like {
     @Id
     private String likeId;

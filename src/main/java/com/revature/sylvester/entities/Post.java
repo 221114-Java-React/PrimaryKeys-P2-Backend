@@ -32,7 +32,7 @@ public class Post {
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             mappedBy = "post"
     )
     @JsonManagedReference // parent

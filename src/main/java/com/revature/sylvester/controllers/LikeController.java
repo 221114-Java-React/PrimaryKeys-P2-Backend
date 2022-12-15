@@ -39,7 +39,7 @@ public class LikeController {
 
         String userId = principal.getUserId();
 
-        if(likeService.isLiked(userId, id))
+        if(!likeService.isLiked(userId, id))
             likeService.saveLikeByUserIdAndPostId(userId, id);
         else
             throw new InvalidLikeException("You have already liked this post");
@@ -62,7 +62,7 @@ public class LikeController {
         if(likeService.isLiked(userId, id))
             likeService.deleteLikeByUserIdAndPostId(userId, id);
         else
-            throw new InvalidLikeException();
+            throw new InvalidLikeException("You have not liked this post");
     }
 
     @GetMapping("/user")

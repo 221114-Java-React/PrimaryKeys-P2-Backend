@@ -4,10 +4,12 @@ import com.revature.sylvester.entities.Like;
 import com.revature.sylvester.repositories.LikeRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class LikeService {
     private final LikeRepository likeRepo;
 
