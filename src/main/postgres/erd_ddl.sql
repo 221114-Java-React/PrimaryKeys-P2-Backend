@@ -28,6 +28,7 @@ CREATE table user_profiles (
 	birth_date DATE not null,
 	occupation VARCHAR(255),
 	bio VARCHAR(255),
+	profile_pic_url VARCHAR(255),
 	user_id VARCHAR(255) unique not null REFERENCES users(user_id)
 );
 
