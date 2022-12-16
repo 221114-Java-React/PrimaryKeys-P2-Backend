@@ -8,6 +8,8 @@ import com.revature.sylvester.entities.UserProfile;
 import com.revature.sylvester.repositories.UserProfileRepository;
 import com.revature.sylvester.repositories.UserRepository;
 import com.revature.sylvester.utils.custom_exceptions.InvalidAuthException;
+import com.revature.sylvester.utils.custom_exceptions.InvalidProfileException;
+import com.revature.sylvester.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,17 +25,19 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public User signup(NewUserRequest req) {
+    public void signup(NewUserRequest req) {
         User createdUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword1(),
                 req.getEmail(), new Date(), false, null);
 
         userRepo.save(createdUser);
-        return createdUser;
     }
 
     public User activate(NewUserRequest req) {
         User activeUser = userRepo.findByUsernameAndPassword(req.getUsername(), req.getPassword1());
-        activeUser.setActive(true);
+        if(!activeUser.isActive())
+            activeUser.setActive(true);
+        else
+            throw new InvalidProfileException("User already has a profile");
         return activeUser;
     }
 

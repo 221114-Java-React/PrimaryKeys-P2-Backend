@@ -1,18 +1,21 @@
 package com.revature.sylvester.services;
 
 import com.revature.sylvester.dtos.requests.NewUserRequest;
+import com.revature.sylvester.dtos.requests.UpdateProfileRequest;
 import com.revature.sylvester.entities.User;
 import com.revature.sylvester.entities.UserProfile;
 import com.revature.sylvester.repositories.UserProfileRepository;
 import com.revature.sylvester.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class UserProfileService {
     private final UserProfileRepository profileRepo;
 
@@ -20,12 +23,16 @@ public class UserProfileService {
         this.profileRepo = profileRepo;
     }
 
-    public UserProfile createProfile(NewUserRequest req, User user) {
+    public void createProfile(NewUserRequest req, User user) {
         UserProfile createdProfile = new UserProfile(UUID.randomUUID().toString(), req.getDisplayName(), null,
                 req.getBirthDate(), null, null, null, user);
 
         profileRepo.save(createdProfile);
-        return createdProfile;
+    }
+
+    public void updateProfile(UpdateProfileRequest req, String profileId) {
+        profileRepo.update(req.getDisplayName(), req.getLocation(), req.getBirthDate(), req.getOccupation(),
+                req.getBio(), req.getProfilePicUrl(), profileId);
     }
 
     public UserProfile getProfileByUserId(String userId) {
@@ -41,5 +48,10 @@ public class UserProfileService {
         int age = Period.between(birthDate, currentDate).getYears();
 
         return age > 13;
+    }
+
+    public boolean isDuplicateUserId(String userId) {
+        List<String> userIds = profileRepo.findAllUserIds();
+        return userIds.contains(userId);
     }
 }
