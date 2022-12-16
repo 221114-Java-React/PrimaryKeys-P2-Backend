@@ -23,11 +23,12 @@ public class UserProfileService {
         this.profileRepo = profileRepo;
     }
 
-    public void createProfile(NewUserRequest req, User user) {
+    public UserProfile createProfile(NewUserRequest req, User user) {
         UserProfile createdProfile = new UserProfile(UUID.randomUUID().toString(), req.getDisplayName(), null,
                 req.getBirthDate(), null, null, null, user);
 
         profileRepo.save(createdProfile);
+        return createdProfile;
     }
 
     public void updateProfile(UpdateProfileRequest req, String profileId) {
