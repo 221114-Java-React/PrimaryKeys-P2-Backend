@@ -1,7 +1,7 @@
 package com.revature.sylvester.services;
 
 import com.revature.sylvester.dtos.requests.NewCommentRequest;
-import com.revature.sylvester.entities.Like;
+import com.revature.sylvester.entities.Comment;
 import com.revature.sylvester.repositories.CommentRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class CommentService {
         commentRepo.save(UUID.randomUUID().toString(), req.getReply(), new Date(), userId, req.getPostId());
     }
 
-    public List<Like> getAllCommentsByPostId(String postId) {
+    public List<Comment> getAllCommentsByPostId(String postId) {
         return commentRepo.findAllByPostId(postId);
     }
 }

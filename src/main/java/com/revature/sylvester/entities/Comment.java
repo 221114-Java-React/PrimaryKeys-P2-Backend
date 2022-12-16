@@ -33,6 +33,9 @@ public class Comment {
     @JsonBackReference
     private Post post;
 
+    public Comment() {
+    }
+
     public Comment(String replyId, String reply, Date replied, User user, Post post) {
         this.replyId = replyId;
         this.reply = reply;

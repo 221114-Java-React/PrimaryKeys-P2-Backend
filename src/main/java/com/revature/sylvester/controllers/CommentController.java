@@ -2,7 +2,7 @@ package com.revature.sylvester.controllers;
 
 import com.revature.sylvester.dtos.requests.NewCommentRequest;
 import com.revature.sylvester.dtos.responses.Principal;
-import com.revature.sylvester.entities.Like;
+import com.revature.sylvester.entities.Comment;
 import com.revature.sylvester.services.CommentService;
 import com.revature.sylvester.services.TokenService;
 import com.revature.sylvester.utils.custom_exceptions.InvalidAuthException;
@@ -43,7 +43,7 @@ public class CommentController {
     }
 
     @GetMapping("/post")
-    public List<Like> getAllByPostId(@RequestParam String id) {
+    public List<Comment> getAllByPostId(@RequestParam String id) {
         return commentService.getAllCommentsByPostId(id);
     }
 

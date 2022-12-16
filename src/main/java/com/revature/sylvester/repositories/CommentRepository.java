@@ -1,7 +1,6 @@
 package com.revature.sylvester.repositories;
 
 import com.revature.sylvester.entities.Comment;
-import com.revature.sylvester.entities.Like;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,5 +15,5 @@ public interface CommentRepository extends CrudRepository<Comment, String> {
     void save(String replyId, String reply, Date replied, String userId, String postId);
 
     @Query(value = "SELECT * FROM replies WHERE post_id = ?1", nativeQuery = true)
-    List<Like> findAllByPostId(String postId);
+    List<Comment> findAllByPostId(String postId);
 }
