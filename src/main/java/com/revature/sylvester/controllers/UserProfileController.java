@@ -30,16 +30,15 @@ public class UserProfileController {
         this.tokenService = tokenService;
     }
 
-    @PostMapping
-    public void create(@RequestBody NewUserRequest req) {
+    public void create(NewUserRequest req) {
         if(!profileService.isEmptyDisplayName(req.getDisplayName())) {
             if(profileService.isValidBirthDate(req.getBirthDate())) {
                 User activeUser = userService.activate(req);
-                profileService.createProfile(req, activeUser);
+                UserProfile createdProfile = profileService.createProfile(req, activeUser);
             } else
                 throw new InvalidUserException("Must be 13 years or older to create a profile");
         } else
-            throw new InvalidUserException("Please enter a display name");
+            throw new InvalidProfileException("Please enter a display name");
     }
 
     @PutMapping

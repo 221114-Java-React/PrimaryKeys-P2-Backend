@@ -25,11 +25,12 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public void signup(NewUserRequest req) {
+    public User signup(NewUserRequest req) {
         User createdUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword1(),
                 req.getEmail(), new Date(), false, null);
 
         userRepo.save(createdUser);
+        return createdUser;
     }
 
     public User activate(NewUserRequest req) {
@@ -42,10 +43,23 @@ public class UserService {
     }
 
     public Principal login(NewLoginRequest req) {
-        if(req.getUsername().isEmpty()||req.getPassword().isEmpty()){
+        if(req.getUsername().isEmpty() || req.getPassword().isEmpty())
             throw new InvalidAuthException("Please enter a username and password");
-        }
+
         User validUser = userRepo.findByUsernameAndPassword(req.getUsername(), req.getPassword());
+
+        if(validUser == null)
+            throw new InvalidAuthException("Incorrect username or password");
+
+        return new Principal(validUser.getUserId(), validUser.getUsername(), validUser.getEmail(),
+                validUser.getRegistered(), validUser.isActive(), validUser.getRoleId());
+    }
+
+    public Principal login(User user) {
+        if(user.getUsername().isEmpty() || user.getPassword().isEmpty())
+            throw new InvalidAuthException("Please enter a username and password");
+
+        User validUser = userRepo.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 
         if(validUser == null)
             throw new InvalidAuthException("Incorrect username or password");
