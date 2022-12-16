@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class UserServiceTest {
     private UserRepository userRepositorySut;
@@ -45,7 +46,7 @@ public class UserServiceTest {
         assertEquals("mRMEY476",newUser.getPassword());
         assertEquals("testUsername@testUsername.com",newUser.getEmail());
         assertEquals(new Date(2022,12,13),newUser.getRegistered());
-        assertEquals(null,newUser.getRoleId());
+        assertNull(newUser.getRoleId());
     }
 
     @Test
@@ -68,7 +69,7 @@ public class UserServiceTest {
         assertEquals("mRMEY476",newUser.getPassword());
         assertEquals("testUsername@testUsername.com",newUser.getEmail());
         assertEquals(new Date(2022,12,13),newUser.getRegistered());
-        assertEquals(null,newUser.getRoleId());
+        assertNull(newUser.getRoleId());
     }
 
     @Test
@@ -78,20 +79,18 @@ public class UserServiceTest {
         UserRepository sut2 = Mockito.spy(userRepositorySut);
         NewLoginRequest req = new NewLoginRequest("testUsername", "mRMEY476");
         User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
-        Principal principal = new Principal("0", "testUsername", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
 
         Mockito.when(sut2.findByUsernameAndPassword(req.getUsername(), req.getPassword())).thenReturn(user);
-        Mockito.when(sut1.login(req)).thenReturn(principal);
 
         // Act
-        Principal newPrincipal = sut1.login(req);
+        Principal principal = sut1.login(req);
 
         // Assert
-        assertEquals("0",newPrincipal.getUserId());
-        assertEquals("testUsername",newPrincipal.getUsername());
-        assertEquals("testUsername@testUsername.com",newPrincipal.getEmail());
-        assertEquals(new Date(2022,12,13),newPrincipal.getRegistered());
-        assertEquals(null,newPrincipal.getRoleId());
+        assertEquals("0",principal.getUserId());
+        assertEquals("testUsername",principal.getUsername());
+        assertEquals("testUsername@testUsername.com",principal.getEmail());
+        assertEquals(new Date(2022,12,13),principal.getRegistered());
+        assertEquals(null,principal.getRoleId());
     }
 
     @Test
