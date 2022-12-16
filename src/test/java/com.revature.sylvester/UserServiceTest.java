@@ -50,6 +50,7 @@ public class UserServiceTest {
     }
 
     @Test
+<<<<<<< Updated upstream
     public void test_correctActivate_givenRequest() {
         // Arrange
         UserService sut1 = Mockito.spy(userServiceSut);
@@ -73,10 +74,12 @@ public class UserServiceTest {
     }
 
     @Test
+=======
+>>>>>>> Stashed changes
     public void test_correctLogin_givenRequest() {
         // Arrange
         UserService sut1 = Mockito.spy(userServiceSut);
-        UserRepository sut2 = Mockito.spy(userRepositorySut);
+        UserRepository sut2 = userRepositorySut;
         NewLoginRequest req = new NewLoginRequest("testUsername", "mRMEY476");
         User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
 
@@ -86,11 +89,26 @@ public class UserServiceTest {
         Principal principal = sut1.login(req);
 
         // Assert
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+        assertEquals("0",newPrincipal.getUserId());
+        assertEquals("testUsername",newPrincipal.getUsername());
+        assertEquals("testUsername@testUsername.com",newPrincipal.getEmail());
+        assertEquals(new Date(2022,12,13),newPrincipal.getRegistered());
+        assertEquals(null,newPrincipal.getRoleId());
+=======
+>>>>>>> Stashed changes
         assertEquals("0",principal.getUserId());
         assertEquals("testUsername",principal.getUsername());
         assertEquals("testUsername@testUsername.com",principal.getEmail());
         assertEquals(new Date(2022,12,13),principal.getRegistered());
+<<<<<<< Updated upstream
         assertEquals(null,principal.getRoleId());
+=======
+        assertNull(principal.getRoleId());
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     }
 
     @Test
