@@ -23,6 +23,9 @@ public interface LikeRepository extends CrudRepository<Like, String> {
     @Query(value = "SELECT * FROM likes WHERE user_id = ?1", nativeQuery = true)
     List<Like> findAllByUserId(String userId);
 
+    @Query(value = "SELECT post_id FROM likes WHERE user_id = ?1", nativeQuery = true)
+    List<String> findAllLikedPostIdsByUserId(String userId);
+
     @Query(value = "SELECT * FROM likes WHERE post_id = ?1", nativeQuery = true)
     List<Like> findAllByPostId(String postId);
 }
