@@ -54,6 +54,14 @@ public class User {
     @JsonManagedReference // parent
     private List<Like> likes;
 
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            mappedBy = "user"
+    )
+    @JsonManagedReference // parent
+    private List<Reply> replies;
+
     public User() {
         super();
     }
@@ -70,7 +78,7 @@ public class User {
     }
 
     public User(String userId, String username, String password, String email, Date registered, boolean isActive,
-                String roleId, UserProfile profile, List<Post> posts, List<Like> likes) {
+                String roleId, UserProfile profile, List<Post> posts, List<Like> likes, List<Reply> replies) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -81,6 +89,7 @@ public class User {
         this.profile = profile;
         this.posts = posts;
         this.likes = likes;
+        this.replies = replies;
     }
 
     public String getUserId() {
@@ -163,6 +172,14 @@ public class User {
         this.likes = likes;
     }
 
+    public List<Reply> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(List<Reply> replies) {
+        this.replies = replies;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -176,6 +193,7 @@ public class User {
                 ", profile=" + profile +
                 ", posts=" + posts +
                 ", likes=" + likes +
+                ", replies=" + replies +
                 '}';
     }
 }

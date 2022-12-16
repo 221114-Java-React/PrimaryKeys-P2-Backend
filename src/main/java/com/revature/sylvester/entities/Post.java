@@ -38,6 +38,14 @@ public class Post {
     @JsonManagedReference // parent
     private List<Like> likes;
 
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            mappedBy = "post"
+    )
+    @JsonManagedReference // parent
+    private List<Reply> replies;
+
     public Post() {
         super();
     }
@@ -56,6 +64,16 @@ public class Post {
         this.imgUrl = imgUrl;
         this.user = user;
         this.likes = likes;
+    }
+
+    public Post(String postId, Date posted, String content, String imgUrl, User user, List<Like> likes, List<Reply> replies) {
+        this.postId = postId;
+        this.posted = posted;
+        this.content = content;
+        this.imgUrl = imgUrl;
+        this.user = user;
+        this.likes = likes;
+        this.replies = replies;
     }
 
     public String getPostId() {
@@ -106,6 +124,14 @@ public class Post {
         this.likes = likes;
     }
 
+    public List<Reply> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(List<Reply> replies) {
+        this.replies = replies;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -115,6 +141,7 @@ public class Post {
                 ", imgUrl='" + imgUrl + '\'' +
                 ", user=" + user +
                 ", likes=" + likes +
+                ", replies=" + replies +
                 '}';
     }
 }

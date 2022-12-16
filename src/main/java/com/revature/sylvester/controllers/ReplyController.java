@@ -1,9 +1,9 @@
 package com.revature.sylvester.controllers;
 
-import com.revature.sylvester.dtos.requests.NewCommentRequest;
+import com.revature.sylvester.dtos.requests.NewReplyRequest;
 import com.revature.sylvester.dtos.responses.Principal;
-import com.revature.sylvester.entities.Comment;
-import com.revature.sylvester.services.CommentService;
+import com.revature.sylvester.entities.Reply;
+import com.revature.sylvester.services.ReplyService;
 import com.revature.sylvester.services.TokenService;
 import com.revature.sylvester.utils.custom_exceptions.InvalidAuthException;
 import org.springframework.http.HttpStatus;
@@ -14,18 +14,18 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/comments")
-public class CommentController {
+@RequestMapping("/replies")
+public class ReplyController {
     private final TokenService tokenService;
-    private final CommentService commentService;
+    private final ReplyService replyService;
 
-    public CommentController(TokenService tokenService, CommentService commentService) {
+    public ReplyController(TokenService tokenService, ReplyService replyService) {
         this.tokenService = tokenService;
-        this.commentService = commentService;
+        this.replyService = replyService;
     }
 
     @PostMapping
-    public void create(@RequestBody NewCommentRequest req, HttpServletRequest servReq) {
+    public void create(@RequestBody NewReplyRequest req, HttpServletRequest servReq) {
         String token = servReq.getHeader("authorization");
 
         if(token == null || token.isEmpty())
@@ -34,17 +34,17 @@ public class CommentController {
         Principal principal = tokenService.extractRequesterDetails(token);
 
         if(principal == null)
-            throw new InvalidAuthException("Please log in to create a comment");
+            throw new InvalidAuthException("Please log in to create a reply");
 
         if(!principal.isActive())
             throw new InvalidAuthException("Your account is not active");
 
-        commentService.createComment(req, principal.getUserId());
+        replyService.createReply(req, principal.getUserId());
     }
 
     @GetMapping("/post")
-    public List<Comment> getAllByPostId(@RequestParam String id) {
-        return commentService.getAllCommentsByPostId(id);
+    public List<Reply> getAllByPostId(@RequestParam String id) {
+        return replyService.getAllRepliesByPostId(id);
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
