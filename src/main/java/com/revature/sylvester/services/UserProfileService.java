@@ -19,7 +19,7 @@ import java.util.UUID;
 public class UserProfileService {
     private final UserProfileRepository profileRepo;
 
-    public UserProfileService(UserProfileRepository profileRepo, UserRepository userRepo) {
+    public UserProfileService(UserProfileRepository profileRepo) {
         this.profileRepo = profileRepo;
     }
 
