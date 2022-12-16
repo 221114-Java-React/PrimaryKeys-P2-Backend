@@ -27,18 +27,18 @@ public class UserService {
 
     public User signup(NewUserRequest req) {
         User createdUser = new User(UUID.randomUUID().toString(), req.getUsername(), req.getPassword1(),
-                req.getEmail(), new Date(), false, null);
+                req.getEmail(), new Date(), true, null);
 
         userRepo.save(createdUser);
         return createdUser;
     }
 
-    public User activate(NewUserRequest req) {
-        User activeUser = userRepo.findByUsernameAndPassword(req.getUsername(), req.getPassword1());
-        if(!activeUser.isActive())
-            activeUser.setActive(true);
+    public User setActive(String userId) {
+        User activeUser = userRepo.findByUserId(userId);
+        if(activeUser.isActive())
+            activeUser.setActive(false);
         else
-            throw new InvalidProfileException("User already has a profile");
+            activeUser.setActive(true);
         return activeUser;
     }
 

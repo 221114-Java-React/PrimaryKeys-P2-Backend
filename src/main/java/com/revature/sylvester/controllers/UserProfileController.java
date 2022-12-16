@@ -21,20 +21,18 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/profiles")
 public class UserProfileController {
     private final UserProfileService profileService;
-    private final UserService userService;
     private final TokenService tokenService;
 
-    public UserProfileController(UserProfileService profileService, UserService userService, TokenService tokenService) {
+    public UserProfileController(UserProfileService profileService, TokenService tokenService) {
         this.profileService = profileService;
-        this.userService = userService;
         this.tokenService = tokenService;
     }
 
     public void create(NewUserRequest req) {
         if(!profileService.isEmptyDisplayName(req.getDisplayName())) {
             if(profileService.isValidBirthDate(req.getBirthDate())) {
-                User activeUser = userService.activate(req);
-                UserProfile createdProfile = profileService.createProfile(req, activeUser);
+                User user = new User();
+                UserProfile createdProfile = profileService.createProfile(req, user);
             } else
                 throw new InvalidUserException("Must be 13 years or older to create a profile");
         } else
