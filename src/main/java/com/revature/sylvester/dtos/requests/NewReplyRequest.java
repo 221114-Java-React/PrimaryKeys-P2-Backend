@@ -1,10 +1,10 @@
 package com.revature.sylvester.dtos.requests;
 
-public class NewCommentRequest {
+public class NewReplyRequest {
     private String reply;
     private String postId;
 
-    public NewCommentRequest(String reply, String postId) {
+    public NewReplyRequest(String reply, String postId) {
         this.reply = reply;
         this.postId = postId;
     }
