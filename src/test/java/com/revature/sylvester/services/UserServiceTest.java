@@ -131,6 +131,18 @@ public class UserServiceTest {
     }
 
     @Test
+    public void test_correctIsValidUsername_givenUsername() {
+        // Arrange
+        String username = "ScruffyC";
+
+        // Act
+        Boolean condition = sut.isValidUsername(username);
+
+        // Assert
+        assertTrue(condition);
+    }
+
+    @Test
     public void test_correctIsDuplicateUsername_givenUsername() {
         // Arrange
         UserService spySut = Mockito.spy(sut);
@@ -148,6 +160,18 @@ public class UserServiceTest {
         // Assert
         assertEquals(true,duplicateUsernameTrue);
         assertEquals(false,duplicateUsernameFalse);
+    }
+
+    @Test
+    public void test_correctIsValidPassword_givenPassword() {
+        // Arrange
+        String password = "Hazelbean19";
+
+        // Act
+        boolean condition = sut.isValidPassword(password);
+
+        // Assert
+        assertTrue(condition);
     }
 
     @Test

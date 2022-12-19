@@ -3,6 +3,7 @@ package com.revature.sylvester.controllers;
 import com.revature.sylvester.dtos.requests.NewPostRequest;
 import com.revature.sylvester.dtos.responses.Principal;
 import com.revature.sylvester.entities.Post;
+import com.revature.sylvester.services.LikeService;
 import com.revature.sylvester.services.PostService;
 import com.revature.sylvester.services.TokenService;
 import com.revature.sylvester.utils.custom_exceptions.InvalidAuthException;
@@ -18,10 +19,12 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController {
     private final PostService postService;
+    private final LikeService likeService;
     private final TokenService tokenService;
 
-    public PostController(PostService postService, TokenService tokenService) {
+    public PostController(PostService postService, LikeService likeService, TokenService tokenService) {
         this.postService = postService;
+        this.likeService = likeService;
         this.tokenService = tokenService;
     }
 
@@ -71,7 +74,8 @@ public class PostController {
         if(!principal.isActive())
             throw new InvalidAuthException("Your account is not active");
 
-        return postService.getLikedPostsByUserId(principal.getUserId());
+        List<String> userLikedPostIds = likeService.getAllLikedPostIdsByUserId(principal.getUserId());
+        return postService.getLikedPostsByUserLikedPostIds(userLikedPostIds);
     }
 
     @GetMapping("/posted")

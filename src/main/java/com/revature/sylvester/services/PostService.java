@@ -2,7 +2,6 @@ package com.revature.sylvester.services;
 
 import com.revature.sylvester.dtos.requests.NewPostRequest;
 import com.revature.sylvester.entities.Post;
-import com.revature.sylvester.repositories.LikeRepository;
 import com.revature.sylvester.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +15,9 @@ import java.util.UUID;
 @Transactional
 public class PostService {
     private final PostRepository postRepo;
-    private final LikeRepository likeRepo;
 
-    public PostService(PostRepository postRepo, LikeRepository likeRepo) {
+    public PostService(PostRepository postRepo) {
         this.postRepo = postRepo;
-        this.likeRepo = likeRepo;
     }
 
     public void savePostByUserId(NewPostRequest req, String userId) {
@@ -36,13 +33,12 @@ public class PostService {
         return postRepo.findAllByUserId(userId);
     }
 
-    public List<Post> getLikedPostsByUserId(String userId) {
+    public List<Post> getLikedPostsByUserLikedPostIds(List<String> userLikedPostIds) {
         Iterable<Post> posts = postRepo.findAll();
-        List<String> userLikedPostIds = likeRepo.findAllLikedPostIdsByUserId(userId);
 
         List<Post> filteredPosts = new ArrayList<>();
-        for (Post post : posts) {
-            if (userLikedPostIds.contains(post.getPostId())) {
+        for(Post post : posts) {
+            if(userLikedPostIds.contains(post.getPostId())) {
                 filteredPosts.add(post);
             }
         }

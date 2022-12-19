@@ -19,11 +19,10 @@ import static org.junit.Assert.assertNull;
 public class PostServiceTest {
     private PostService sut;
     private final PostRepository mockPostRepo = Mockito.mock(PostRepository.class);
-    private final LikeRepository mockLikeRepo = Mockito.mock(LikeRepository.class);
 
     @Before
     public void init() {
-        sut = new PostService(mockPostRepo, mockLikeRepo);
+        sut = new PostService(mockPostRepo);
     }
 
     @Test
