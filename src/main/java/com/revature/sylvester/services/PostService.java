@@ -2,10 +2,12 @@ package com.revature.sylvester.services;
 
 import com.revature.sylvester.dtos.requests.NewPostRequest;
 import com.revature.sylvester.entities.Post;
+import com.revature.sylvester.repositories.LikeRepository;
 import com.revature.sylvester.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -14,9 +16,11 @@ import java.util.UUID;
 @Transactional
 public class PostService {
     private final PostRepository postRepo;
+    private final LikeRepository likeRepo;
 
-    public PostService(PostRepository postRepo) {
+    public PostService(PostRepository postRepo, LikeRepository likeRepo) {
         this.postRepo = postRepo;
+        this.likeRepo = likeRepo;
     }
 
     public void savePostByUserId(NewPostRequest req, String userId) {
@@ -30,6 +34,20 @@ public class PostService {
 
     public List<Post> getAllPostsByUserId(String userId) {
         return postRepo.findAllByUserId(userId);
+    }
+
+    public List<Post> getLikedPostsByUserId(String userId) {
+        Iterable<Post> posts = postRepo.findAll();
+        List<String> userLikedPostIds = likeRepo.findAllLikedPostIdsByUserId(userId);
+
+        List<Post> filteredPosts = new ArrayList<>();
+        for (Post post : posts) {
+            if (userLikedPostIds.contains(post.getPostId())) {
+                filteredPosts.add(post);
+            }
+        }
+
+        return filteredPosts;
     }
 
     public List<Post> sortAllPostsByPosted() {

@@ -56,6 +56,24 @@ public class PostController {
         return postService.getAllPostsByUserId(id);
     }
 
+    @GetMapping("/liked")
+    public List<Post> filterAllByLiked(HttpServletRequest servReq) {
+        String token = servReq.getHeader("authorization");
+
+        if(token == null || token.isEmpty())
+            throw new InvalidAuthException("Invalid token");
+
+        Principal principal = tokenService.extractRequesterDetails(token);
+
+        if(principal == null)
+            throw new InvalidAuthException("Please log in to create a post");
+
+        if(!principal.isActive())
+            throw new InvalidAuthException("Your account is not active");
+
+        return postService.getLikedPostsByUserId(principal.getUserId());
+    }
+
     @GetMapping("/posted")
     public List<Post> sortAllByPosted() {
         return postService.sortAllPostsByPosted();
