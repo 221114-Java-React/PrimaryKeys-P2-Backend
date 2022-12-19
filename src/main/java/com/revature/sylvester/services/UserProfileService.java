@@ -50,9 +50,4 @@ public class UserProfileService {
 
         return age > 13;
     }
-
-    public boolean isDuplicateUserId(String userId) {
-        List<String> userIds = profileRepo.findAllUserIds();
-        return userIds.contains(userId);
-    }
 }

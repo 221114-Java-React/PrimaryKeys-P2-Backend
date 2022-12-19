@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -30,8 +31,13 @@ public class UserServiceTest {
     public void test_correctSignup_givenRequest() {
         // Arrange
         UserService spySut = Mockito.spy(sut);
-        NewUserRequest req = new NewUserRequest("testUsername", "mRMEY476", "mRMEY476", "testUsername@testUsername.com", "testDisplayName", LocalDate.of(2022,12,13));
-        User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
+        NewUserRequest req = new NewUserRequest("testUsername", "mRMEY476", "mRMEY476",
+                "testUsername@testUsername.com", "testDisplayName",
+                LocalDate.of(2022,12,13));
+
+        User user = new User("0", "testUsername", "mRMEY476",
+                "testUsername@testUsername.com", new Date(2022,12,13), true,
+                null);
 
         Mockito.when(spySut.signup(req)).thenReturn(user);
 
@@ -52,27 +58,56 @@ public class UserServiceTest {
         // Arrange
         UserService spySut = Mockito.spy(sut);
         NewLoginRequest req = new NewLoginRequest("testUsername", "mRMEY476");
-        User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
+        User user = new User("0", "testUsername", "mRMEY476",
+                "testUsername@testUsername.com", new Date(2022,12,13), true,
+                null);
 
         Mockito.when(mockUserRepo.findByUsernameAndPassword(req.getUsername(), req.getPassword())).thenReturn(user);
 
         // Act
-        Principal newPrincipal = spySut.login(req);
+        Principal principal = spySut.login(req);
 
         // Assert
-        assertEquals("0",newPrincipal.getUserId());
-        assertEquals("testUsername",newPrincipal.getUsername());
-        assertEquals("testUsername@testUsername.com",newPrincipal.getEmail());
-        assertEquals(new Date(2022,12,13),newPrincipal.getRegistered());
-        assertNull(newPrincipal.getRoleId());
+        assertEquals("0",principal.getUserId());
+        assertEquals("testUsername",principal.getUsername());
+        assertEquals("testUsername@testUsername.com",principal.getEmail());
+        assertEquals(new Date(2022,12,13),principal.getRegistered());
+        assertNull(principal.getRoleId());
+    }
+
+    @Test
+    public void test_correctLogin_givenUser() {
+        // Arrange
+        UserService spySut = Mockito.spy(sut);
+        User user = new User("0", "testUsername", "mRMEY476",
+                "testUsername@testUsername.com", new Date(2022,12,13), true,
+                null);
+
+        Mockito.when(mockUserRepo.findByUsernameAndPassword(user.getUsername(), user.getPassword())).thenReturn(user);
+
+        // Act
+        Principal principal = spySut.login(user);
+
+        // Assert
+        assertEquals("0",principal.getUserId());
+        assertEquals("testUsername",principal.getUsername());
+        assertEquals("testUsername@testUsername.com",principal.getEmail());
+        assertEquals(new Date(2022,12,13),principal.getRegistered());
+        assertNull(principal.getRoleId());
     }
 
     @Test
     public void test_correctGetAllUsers_givenNothing() {
         // Arrange
         UserService spySut = Mockito.spy(sut);
-        User user1 = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
-        User user2 = new User("1", "testUsername2", "mRMEY476", "testUsername2@testUsername2.com", new Date(2022,12,13), true, null);
+        User user1 = new User("0", "testUsername", "mRMEY476",
+                "testUsername@testUsername.com", new Date(2022,12,13), true,
+                null);
+
+        User user2 = new User("1", "testUsername2", "mRMEY476",
+                "testUsername2@testUsername2.com", new Date(2022,12,13), true,
+                null);
+
         List<User> users = new ArrayList<>();
         users.add(user1);
         users.add(user2);
@@ -108,7 +143,10 @@ public class UserServiceTest {
     public void test_correctGetAllUsersByUsername_givenUsername() {
         // Arrange
         UserService spySut = Mockito.spy(sut);
-        User user1 = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
+        User user1 = new User("0", "testUsername", "mRMEY476",
+                "testUsername@testUsername.com", new Date(2022,12,13), true,
+                null);
+
         List<User> users = new ArrayList<>();
         users.add(user1);
 
@@ -219,10 +257,12 @@ public class UserServiceTest {
     }
 
     @Test
-    public void test_correctSetActive_givenUserId() {
+    public void test_correctSetActive_givenActiveUserId() {
         // Arrange
         UserService spySut = Mockito.spy(sut);
-        User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
+        User user = new User(UUID.randomUUID().toString(), "testUsername", "mRMEY476",
+                "testUsername@testUsername.com", new Date(2022,12,13), true,
+                null);
 
         Mockito.when(mockUserRepo.findByUserId(user.getUserId())).thenReturn(user);
 
@@ -231,5 +271,22 @@ public class UserServiceTest {
 
         // Assert
         assertFalse(user.isActive());
+    }
+
+    @Test
+    public void test_correctSetActive_givenInactiveUserId() {
+        // Arrange
+        UserService spySut = Mockito.spy(sut);
+        User user = new User("0", "testUsername", "mRMEY476",
+                "testUsername@testUsername.com", new Date(2022,12,13), false,
+                null);
+
+        Mockito.when(mockUserRepo.findByUserId(user.getUserId())).thenReturn(user);
+
+        // Act
+        spySut.setActive(user.getUserId());
+
+        // Assert
+        assertTrue(user.isActive());
     }
 }
