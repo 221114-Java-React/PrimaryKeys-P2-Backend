@@ -46,6 +46,8 @@ public class UserController {
                                         createdUser = userService.signup(req);
                                         UserProfile createdProfile = profileService.createProfile(req, createdUser);
                                         principal = userService.login(createdUser);
+                                        String token = tokenService.generateToken(principal);
+                                        principal.setToken(token);
                                     } else
                                         throw new InvalidProfileException("Must be 13 years or older to create a profile");
                                 } else

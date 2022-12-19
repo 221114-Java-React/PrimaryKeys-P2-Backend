@@ -1,0 +1,33 @@
+name: Java CI with Maven
+
+on:
+  push:
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Overwrite File
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: src/main/resources/application.yaml
+          write-mode: overwrite
+          contents: |
+            ${{ secrets.APPLICATION_YML }}
+            
+      - name: Overwrite File
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: src/main/resources/resource.properties
+          write-mode: overwrite
+          contents: |
+            ${{ secrets.RESOURCE_PROPERTIES }}
+            
+      - name: Build with Maven
+        run: mvn clean install
