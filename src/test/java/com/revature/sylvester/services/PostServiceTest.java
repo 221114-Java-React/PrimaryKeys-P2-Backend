@@ -7,8 +7,6 @@ import com.revature.sylvester.entities.User;
 import com.revature.sylvester.repositories.PostRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;

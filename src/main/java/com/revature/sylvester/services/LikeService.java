@@ -29,12 +29,12 @@ public class LikeService {
         return likeRepo.findAllByUserId(userId);
     }
 
-    public List<String> getAllLikedPostIdsByUserId(String userId) {
-        return likeRepo.findAllLikedPostIdsByUserId(userId);
-    }
-
     public List<Like> getAllLikesByPostId(String postId) {
         return likeRepo.findAllByPostId(postId);
+    }
+
+    public List<String> getAllLikedPostIdsByUserId(String userId) {
+        return likeRepo.findAllLikedPostIdsByUserId(userId);
     }
 
     public int getLikeCountByPostId(String postId) {
