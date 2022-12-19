@@ -1,4 +1,4 @@
-package com.revature.sylvester;
+package com.revature.sylvester.services;
 
 import com.revature.sylvester.dtos.requests.NewLoginRequest;
 import com.revature.sylvester.dtos.requests.NewUserRequest;

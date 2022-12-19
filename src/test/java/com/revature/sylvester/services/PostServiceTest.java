@@ -1,4 +1,4 @@
-package com.revature.sylvester;
+package com.revature.sylvester.services;
 
 import com.revature.sylvester.entities.Like;
 import com.revature.sylvester.entities.Post;
