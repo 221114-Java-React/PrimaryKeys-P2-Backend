@@ -32,7 +32,7 @@ public class User {
 
     @OneToOne(
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "user"
     )
     @JsonManagedReference // parent
@@ -40,7 +40,7 @@ public class User {
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "user"
     )
     @JsonManagedReference // parent
@@ -48,7 +48,7 @@ public class User {
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "user"
     )
     @JsonManagedReference // parent
@@ -56,7 +56,7 @@ public class User {
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "user"
     )
     @JsonManagedReference // parent
