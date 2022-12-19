@@ -78,6 +78,11 @@ public class LikeController {
         return likeService.getAllLikesByPostId(id);
     }
 
+    @GetMapping("/count")
+    public int getCountByPostId(@RequestParam String id) {
+        return likeService.getLikeCountByPostId(id);
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidLikeException.class)
     public InvalidLikeException handledLikeException (InvalidLikeException e) {

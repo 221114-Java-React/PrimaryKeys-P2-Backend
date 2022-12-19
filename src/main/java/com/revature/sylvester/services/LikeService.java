@@ -33,6 +33,10 @@ public class LikeService {
         return likeRepo.findAllByPostId(postId);
     }
 
+    public int getLikeCountByPostId(String postId) {
+        return likeRepo.countAllLikesByPostId(postId);
+    }
+
     public boolean isLiked(String userId, String postId) {
         Like validLike = likeRepo.findByUserIdAndPostId(userId, postId);
 
