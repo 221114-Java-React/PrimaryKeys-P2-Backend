@@ -1,4 +1,4 @@
-package com.revature.sylvester;
+package com.revature.sylvester.services;
 
 import com.revature.sylvester.dtos.requests.NewLoginRequest;
 import com.revature.sylvester.dtos.requests.NewUserRequest;
@@ -15,29 +15,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class UserServiceTest {
-    private UserRepository userRepositorySut;
-    private UserService userServiceSut;
+    private UserService sut;
+    private final UserRepository mockUserRepo = Mockito.mock(UserRepository.class);
 
     @Before
     public void init() {
-        userRepositorySut = Mockito.mock(UserRepository.class);
-        userServiceSut = new UserService(userRepositorySut);
+        sut = new UserService(mockUserRepo);
     }
 
     @Test
     public void test_correctSignup_givenRequest() {
         // Arrange
-        UserService sut = Mockito.spy(userServiceSut);
+        UserService spySut = Mockito.spy(sut);
         NewUserRequest req = new NewUserRequest("testUsername", "mRMEY476", "mRMEY476", "testUsername@testUsername.com", "testDisplayName", LocalDate.of(2022,12,13));
         User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
 
-        Mockito.when(sut.signup(req)).thenReturn(user);
+        Mockito.when(spySut.signup(req)).thenReturn(user);
 
         // Act
-        User newUser = sut.signup(req);
+        User newUser = spySut.signup(req);
 
         // Assert
         assertEquals("0",newUser.getUserId());
@@ -45,69 +44,43 @@ public class UserServiceTest {
         assertEquals("mRMEY476",newUser.getPassword());
         assertEquals("testUsername@testUsername.com",newUser.getEmail());
         assertEquals(new Date(2022,12,13),newUser.getRegistered());
-        assertEquals(null,newUser.getRoleId());
-    }
-
-    @Test
-    public void test_correctActivate_givenRequest() {
-        // Arrange
-        UserService sut1 = Mockito.spy(userServiceSut);
-        UserRepository sut2 = Mockito.spy(userRepositorySut);
-        NewUserRequest req = new NewUserRequest("testUsername", "mRMEY476", "mRMEY476", "testUsername@testUsername.com", "testDisplayName", LocalDate.of(2022,12,13));
-        User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
-
-        Mockito.when(sut2.findByUsernameAndPassword(req.getUsername(), req.getPassword1())).thenReturn(user);
-        Mockito.when(sut1.activate(req)).thenReturn(user);
-
-        // Act
-        User newUser = sut1.activate(req);
-
-        // Assert
-        assertEquals("0",newUser.getUserId());
-        assertEquals("testUsername",newUser.getUsername());
-        assertEquals("mRMEY476",newUser.getPassword());
-        assertEquals("testUsername@testUsername.com",newUser.getEmail());
-        assertEquals(new Date(2022,12,13),newUser.getRegistered());
-        assertEquals(null,newUser.getRoleId());
+        assertNull(newUser.getRoleId());
     }
 
     @Test
     public void test_correctLogin_givenRequest() {
         // Arrange
-        UserService sut1 = Mockito.spy(userServiceSut);
-        UserRepository sut2 = Mockito.spy(userRepositorySut);
+        UserService spySut = Mockito.spy(sut);
         NewLoginRequest req = new NewLoginRequest("testUsername", "mRMEY476");
         User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
-        Principal principal = new Principal("0", "testUsername", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
 
-        Mockito.when(sut2.findByUsernameAndPassword(req.getUsername(), req.getPassword())).thenReturn(user);
-        Mockito.when(sut1.login(req)).thenReturn(principal);
+        Mockito.when(mockUserRepo.findByUsernameAndPassword(req.getUsername(), req.getPassword())).thenReturn(user);
 
         // Act
-        Principal newPrincipal = sut1.login(req);
+        Principal newPrincipal = spySut.login(req);
 
         // Assert
         assertEquals("0",newPrincipal.getUserId());
         assertEquals("testUsername",newPrincipal.getUsername());
         assertEquals("testUsername@testUsername.com",newPrincipal.getEmail());
         assertEquals(new Date(2022,12,13),newPrincipal.getRegistered());
-        assertEquals(null,newPrincipal.getRoleId());
+        assertNull(newPrincipal.getRoleId());
     }
 
     @Test
     public void test_correctGetAllUsers_givenNothing() {
         // Arrange
-        UserService sut = Mockito.spy(userServiceSut);
+        UserService spySut = Mockito.spy(sut);
         User user1 = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
         User user2 = new User("1", "testUsername2", "mRMEY476", "testUsername2@testUsername2.com", new Date(2022,12,13), true, null);
         List<User> users = new ArrayList<>();
         users.add(user1);
         users.add(user2);
 
-        Mockito.when(sut.getAllUsers()).thenReturn(users);
+        Mockito.when(spySut.getAllUsers()).thenReturn(users);
 
         // Act
-        List<User> newUsers = sut.getAllUsers();
+        List<User> newUsers = spySut.getAllUsers();
 
         // Assert
         assertEquals(2, newUsers.size());
@@ -119,7 +92,7 @@ public class UserServiceTest {
         assertEquals("mRMEY476",newUser.getPassword());
         assertEquals("testUsername@testUsername.com",newUser.getEmail());
         assertEquals(new Date(2022,12,13),newUser.getRegistered());
-        assertEquals(null,newUser.getRoleId());
+        assertNull(newUser.getRoleId());
 
         newUser = newUsers.get(1);
 
@@ -128,21 +101,21 @@ public class UserServiceTest {
         assertEquals("mRMEY476",newUser.getPassword());
         assertEquals("testUsername2@testUsername2.com",newUser.getEmail());
         assertEquals(new Date(2022,12,13),newUser.getRegistered());
-        assertEquals(null,newUser.getRoleId());
+        assertNull(newUser.getRoleId());
     }
 
     @Test
     public void test_correctGetAllUsersByUsername_givenUsername() {
         // Arrange
-        UserService sut = Mockito.spy(userServiceSut);
+        UserService spySut = Mockito.spy(sut);
         User user1 = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
         List<User> users = new ArrayList<>();
         users.add(user1);
 
-        Mockito.when(sut.getAllUsersByUsername("testUsername")).thenReturn(users);
+        Mockito.when(spySut.getAllUsersByUsername("testUsername")).thenReturn(users);
 
         // Act
-        List<User> newUsers = sut.getAllUsersByUsername("testUsername");
+        List<User> newUsers = spySut.getAllUsersByUsername("testUsername");
 
         // Assert
         assertEquals(1, newUsers.size());
@@ -154,24 +127,23 @@ public class UserServiceTest {
         assertEquals("mRMEY476",newUser.getPassword());
         assertEquals("testUsername@testUsername.com",newUser.getEmail());
         assertEquals(new Date(2022,12,13),newUser.getRegistered());
-        assertEquals(null,newUser.getRoleId());
+        assertNull(newUser.getRoleId());
     }
 
     @Test
     public void test_correctIsDuplicateUsername_givenUsername() {
         // Arrange
-        UserService sut1 = Mockito.spy(userServiceSut);
-        UserRepository sut2 = Mockito.spy(userRepositorySut);
+        UserService spySut = Mockito.spy(sut);
         List<String> allUsernames = new ArrayList<>();
         allUsernames.add("testUsername");
 
-        Mockito.when(sut2.findAllUsernames()).thenReturn(allUsernames);
-        Mockito.when(sut1.isDuplicateUsername("testUsername")).thenReturn(true);
-        Mockito.when(sut1.isDuplicateUsername("testUsername2")).thenReturn(false);
+        Mockito.when(mockUserRepo.findAllUsernames()).thenReturn(allUsernames);
+        Mockito.when(spySut.isDuplicateUsername("testUsername")).thenReturn(true);
+        Mockito.when(spySut.isDuplicateUsername("testUsername2")).thenReturn(false);
 
         // Act
-        Boolean duplicateUsernameTrue = sut1.isDuplicateUsername("testUsername");
-        Boolean duplicateUsernameFalse = sut1.isDuplicateUsername("testUsername2");
+        Boolean duplicateUsernameTrue = spySut.isDuplicateUsername("testUsername");
+        Boolean duplicateUsernameFalse = spySut.isDuplicateUsername("testUsername2");
 
         // Assert
         assertEquals(true,duplicateUsernameTrue);
@@ -183,7 +155,7 @@ public class UserServiceTest {
         // Arrange
 
         // Act
-        Boolean samePassword = userServiceSut.isSamePassword("mRMEY476","mRMEY476");
+        Boolean samePassword = sut.isSamePassword("mRMEY476","mRMEY476");
 
         // Assert
         assertEquals(true,samePassword);
@@ -192,21 +164,48 @@ public class UserServiceTest {
     @Test
     public void test_correctIsDuplicateEmail_givenEmail() {
         // Arrange
-        UserService sut1 = Mockito.spy(userServiceSut);
-        UserRepository sut2 = Mockito.spy(userRepositorySut);
+        UserService spySut = Mockito.spy(sut);
         List<String> allEmails = new ArrayList<>();
         allEmails.add("testUsername@testUsername.com");
 
-        Mockito.when(sut2.findAllEmails()).thenReturn(allEmails);
-        Mockito.when(sut1.isDuplicateEmail("testUsername@testUsername.com")).thenReturn(true);
-        Mockito.when(sut1.isDuplicateEmail("testUsername2@testUsername2.com")).thenReturn(false);
+        Mockito.when(mockUserRepo.findAllEmails()).thenReturn(allEmails);
+        Mockito.when(spySut.isDuplicateEmail("testUsername@testUsername.com")).thenReturn(true);
+        Mockito.when(spySut.isDuplicateEmail("testUsername2@testUsername2.com")).thenReturn(false);
 
         // Act
-        Boolean duplicateEmailTrue = sut1.isDuplicateEmail("testUsername@testUsername.com");
-        Boolean duplicateEmailFalse = sut1.isDuplicateEmail("testUsername2@testUsername2.com");
+        Boolean duplicateEmailTrue = spySut.isDuplicateEmail("testUsername@testUsername.com");
+        Boolean duplicateEmailFalse = spySut.isDuplicateEmail("testUsername2@testUsername2.com");
 
         // Assert
         assertEquals(true,duplicateEmailTrue);
         assertEquals(false,duplicateEmailFalse);
+    }
+
+    @Test
+    public void test_correctIsActiveEmail_givenEmail() {
+        // Arrange
+        UserService spySut = Mockito.spy(sut);
+        String email = "testUsername@testUsername.com";
+
+        // Act
+        boolean validEmailTrue = spySut.isValidEmail(email);
+
+        // Assert
+        assertTrue(validEmailTrue);
+    }
+
+    @Test
+    public void test_correctSetActive_givenUserId() {
+        // Arrange
+        UserService spySut = Mockito.spy(sut);
+        User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
+
+        Mockito.when(mockUserRepo.findByUserId(user.getUserId())).thenReturn(user);
+
+        // Act
+        spySut.setActive(user.getUserId());
+
+        // Assert
+        assertFalse(user.isActive());
     }
 }

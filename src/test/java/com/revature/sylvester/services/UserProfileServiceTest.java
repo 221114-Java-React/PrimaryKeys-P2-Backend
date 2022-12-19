@@ -1,4 +1,4 @@
-package com.revature.sylvester;
+package com.revature.sylvester.services;
 
 import com.revature.sylvester.dtos.requests.NewUserRequest;
 import com.revature.sylvester.entities.User;
@@ -14,42 +14,38 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class UserProfileServiceTest {
-    private UserProfileRepository userProfileRepositorySut;
-    private UserRepository userRepositorySut;
-    private UserProfileService userProfileServiceSut;
+    private UserProfileService sut;
+    private final UserProfileRepository mockProfileRepo = Mockito.mock(UserProfileRepository.class);
 
     @Before
     public void init() {
-        userProfileRepositorySut = Mockito.mock(UserProfileRepository.class);
-        userRepositorySut = Mockito.mock(UserRepository.class);
-        userProfileServiceSut = new UserProfileService(userProfileRepositorySut,userRepositorySut);
+        sut = new UserProfileService(mockProfileRepo);
     }
 
     @Test
     public void test_correctCreateProfile_givenRequest() {
         // Arrange
-        UserProfileService sut1 = Mockito.spy(userProfileServiceSut);
-        UserRepository sut2 = Mockito.spy(userRepositorySut);
+        UserProfileService spySut = Mockito.spy(sut);
         NewUserRequest req = new NewUserRequest("testUsername", "mRMEY476", "mRMEY476", "testUsername@testUsername.com", "testDisplayName", LocalDate.of(2022,12,13));
         User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
         UserProfile userProfile = new UserProfile("0", req.getDisplayName(), null, req.getBirthDate(), null, null, null, user);
 
-        Mockito.when(sut2.findByUsernameAndPassword(req.getUsername(), req.getPassword1())).thenReturn(user);
-        Mockito.when(sut1.createProfile(req, user)).thenReturn(userProfile);
+        Mockito.when(spySut.createProfile(req, user)).thenReturn(userProfile);
 
         // Act
-        UserProfile newUserProfile = sut1.createProfile(req, user);
+        UserProfile newUserProfile = spySut.createProfile(req, user);
 
         // Assert
         assertEquals("0",newUserProfile.getProfileId());
         assertEquals(req.getDisplayName(),newUserProfile.getDisplayName());
-        assertEquals(null,newUserProfile.getLocation());
+        assertNull(newUserProfile.getLocation());
         assertEquals(req.getBirthDate(),newUserProfile.getBirthDate());
-        assertEquals(null,newUserProfile.getOccupation());
-        assertEquals(null,newUserProfile.getBio());
-        assertEquals(null,newUserProfile.getProfilePicUrl());
+        assertNull(newUserProfile.getOccupation());
+        assertNull(newUserProfile.getBio());
+        assertNull(newUserProfile.getProfilePicUrl());
 
         User newUser = newUserProfile.getUser();
 
@@ -58,18 +54,17 @@ public class UserProfileServiceTest {
         assertEquals("mRMEY476",newUser.getPassword());
         assertEquals("testUsername@testUsername.com",newUser.getEmail());
         assertEquals(new Date(2022,12,13),newUser.getRegistered());
-        assertEquals(null,newUser.getRoleId());
+        assertNull(newUser.getRoleId());
     }
 
     @Test
     public void test_correctGetProfileByUserId_givenUserId() {
         // Arrange
-        UserProfileService sut1 = Mockito.spy(userProfileServiceSut);
-        UserProfileRepository sut3 = Mockito.spy(userProfileRepositorySut);
+        UserProfileService sut1 = Mockito.spy(sut);
         User user = new User("0", "testUsername", "mRMEY476", "testUsername@testUsername.com", new Date(2022,12,13), true, null);
         UserProfile userProfile = new UserProfile("0", "testDisplayName", null, LocalDate.of(2022,12,13), null, null, null, user);
 
-        Mockito.when(sut3.findByUserId("0")).thenReturn(userProfile);
+        Mockito.when(mockProfileRepo.findByUserId("0")).thenReturn(userProfile);
         Mockito.when(sut1.getProfileByUserId("0")).thenReturn(userProfile);
 
         // Act
@@ -78,11 +73,11 @@ public class UserProfileServiceTest {
         // Assert
         assertEquals("0",newUserProfile.getProfileId());
         assertEquals("testDisplayName",newUserProfile.getDisplayName());
-        assertEquals(null,newUserProfile.getLocation());
+        assertNull(newUserProfile.getLocation());
         assertEquals(LocalDate.of(2022,12,13),newUserProfile.getBirthDate());
-        assertEquals(null,newUserProfile.getOccupation());
-        assertEquals(null,newUserProfile.getBio());
-        assertEquals(null,newUserProfile.getProfilePicUrl());
+        assertNull(newUserProfile.getOccupation());
+        assertNull(newUserProfile.getBio());
+        assertNull(newUserProfile.getProfilePicUrl());
 
         User newUser = newUserProfile.getUser();
 
@@ -91,7 +86,7 @@ public class UserProfileServiceTest {
         assertEquals("mRMEY476",newUser.getPassword());
         assertEquals("testUsername@testUsername.com",newUser.getEmail());
         assertEquals(new Date(2022,12,13),newUser.getRegistered());
-        assertEquals(null,newUser.getRoleId());
+        assertNull(newUser.getRoleId());
     }
 
     @Test
@@ -99,8 +94,8 @@ public class UserProfileServiceTest {
         // Arrange
 
         // Act
-        Boolean notEmptyDisplayName = userProfileServiceSut.isEmptyDisplayName("testDisplayName");
-        Boolean emptyDisplayName = userProfileServiceSut.isEmptyDisplayName("");
+        Boolean notEmptyDisplayName = sut.isEmptyDisplayName("testDisplayName");
+        Boolean emptyDisplayName = sut.isEmptyDisplayName("");
 
         // Assert
         assertEquals(false,notEmptyDisplayName);
@@ -112,8 +107,8 @@ public class UserProfileServiceTest {
         // Arrange
 
         // Act
-        Boolean validBirthDate = userProfileServiceSut.isValidBirthDate(LocalDate.of(2000, 12, 13));
-        Boolean invalidBirthDate = userProfileServiceSut.isValidBirthDate(LocalDate.of(2022, 12, 13));
+        Boolean validBirthDate = sut.isValidBirthDate(LocalDate.of(2000, 12, 13));
+        Boolean invalidBirthDate = sut.isValidBirthDate(LocalDate.of(2022, 12, 13));
 
         // Assert
         assertEquals(true,validBirthDate);

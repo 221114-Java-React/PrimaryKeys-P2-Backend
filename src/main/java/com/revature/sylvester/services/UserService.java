@@ -33,12 +33,12 @@ public class UserService {
         return createdUser;
     }
 
-    public User activate(NewUserRequest req) {
-        User activeUser = userRepo.findByUsernameAndPassword(req.getUsername(), req.getPassword1());
-        if(!activeUser.isActive())
-            activeUser.setActive(true);
+    public User setActive(String userId) {
+        User activeUser = userRepo.findByUserId(userId);
+        if(activeUser.isActive())
+            activeUser.setActive(false);
         else
-            throw new InvalidProfileException("User already has a profile");
+            activeUser.setActive(true);
         return activeUser;
     }
 
