@@ -32,7 +32,7 @@ public class Post {
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "post"
     )
     @JsonManagedReference // parent
@@ -40,7 +40,7 @@ public class Post {
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "post"
     )
     @JsonManagedReference // parent
