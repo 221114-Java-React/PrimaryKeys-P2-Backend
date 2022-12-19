@@ -3,8 +3,8 @@ package com.revature.sylvester.services;
 import com.revature.sylvester.entities.Like;
 import com.revature.sylvester.entities.Post;
 import com.revature.sylvester.entities.User;
+import com.revature.sylvester.repositories.LikeRepository;
 import com.revature.sylvester.repositories.PostRepository;
-import com.revature.sylvester.services.PostService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -18,11 +18,12 @@ import static org.junit.Assert.assertNull;
 
 public class PostServiceTest {
     private PostService sut;
-    private final PostRepository mockPostRepo = Mockito.mock(PostRepository.class);;
+    private final PostRepository mockPostRepo = Mockito.mock(PostRepository.class);
+    private final LikeRepository mockLikeRepo = Mockito.mock(LikeRepository.class);
 
     @Before
     public void init() {
-        sut = new PostService(mockPostRepo);
+        sut = new PostService(mockPostRepo, mockLikeRepo);
     }
 
     @Test
