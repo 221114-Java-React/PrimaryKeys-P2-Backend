@@ -48,13 +48,9 @@ public class PostServiceTest {
                 "testUsername@testUsername.com", new Date(2022,12,13), true,
                 null);
 
-        List<Like> likes = new ArrayList<>();
-        Like like1 = new Like("0",user1,null);
-        likes.add(like1);
         Post post1 = new Post("0", new Date(2022,12,13), "first post", null,
-                user1, likes);
+                user1);
 
-        like1.setPost(post1);
         List<Post> posts = new ArrayList<>();
         posts.add(post1);
 
@@ -80,12 +76,6 @@ public class PostServiceTest {
         assertEquals("testUsername@testUsername.com",newUser.getEmail());
         assertEquals(new Date(2022,12,13),newUser.getRegistered());
         assertNull(newUser.getRoleId());
-
-        Like newLike = newPost.getLikes().get(0);
-
-        assertEquals("0",newLike.getLikeId());
-        assertEquals(newUser,newLike.getUser());
-        assertEquals(newPost,newLike.getPost());
     }
 
     @Test
@@ -96,13 +86,9 @@ public class PostServiceTest {
                 "testUsername@testUsername.com", new Date(2022,12,13), true,
                 null);
 
-        List<Like> likes = new ArrayList<>();
-        Like like1 = new Like("0",user1,null);
-        likes.add(like1);
         Post post1 = new Post("0", new Date(2022,12,13), "first post", null,
-                user1, likes);
+                user1);
 
-        like1.setPost(post1);
         List<Post> posts = new ArrayList<>();
         posts.add(post1);
         String userId = user1.getUserId();
@@ -129,12 +115,6 @@ public class PostServiceTest {
         assertEquals("testUsername@testUsername.com",newUser.getEmail());
         assertEquals(new Date(2022,12,13),newUser.getRegistered());
         assertNull(newUser.getRoleId());
-
-        Like newLike = newPost.getLikes().get(0);
-
-        assertEquals("0",newLike.getLikeId());
-        assertEquals(newUser,newLike.getUser());
-        assertEquals(newPost,newLike.getPost());
     }
 
     @Test
@@ -145,13 +125,9 @@ public class PostServiceTest {
                 "testUsername@testUsername.com", new Date(2022,12,13), true,
                 null);
 
-        List<Like> likes = new ArrayList<>();
-        Like like1 = new Like("0",user1,null);
-        likes.add(like1);
         Post post1 = new Post("0", new Date(2022,12,13), "first post", null,
-                user1, likes);
+                user1);
 
-        like1.setPost(post1);
         List<Post> posts = new ArrayList<>();
         posts.add(post1);
 
@@ -177,12 +153,6 @@ public class PostServiceTest {
         assertEquals("testUsername@testUsername.com",newUser.getEmail());
         assertEquals(new Date(2022,12,13),newUser.getRegistered());
         assertNull(newUser.getRoleId());
-
-        Like newLike = newPost.getLikes().get(0);
-
-        assertEquals("0",newLike.getLikeId());
-        assertEquals(newUser,newLike.getUser());
-        assertEquals(newPost,newLike.getPost());
     }
 
     @Test

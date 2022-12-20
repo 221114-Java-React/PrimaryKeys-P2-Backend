@@ -19,7 +19,7 @@ public class ReplyService {
         this.replyRepo = replyRepo;
     }
 
-    public void createReply(NewReplyRequest req, String userId) {
+    public void saveReplyByUserId(NewReplyRequest req, String userId) {
         replyRepo.save(UUID.randomUUID().toString(), req.getReply(), new Date(), userId, req.getPostId());
     }
 

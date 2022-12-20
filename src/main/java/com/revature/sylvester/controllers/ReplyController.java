@@ -39,7 +39,7 @@ public class ReplyController {
         if(!principal.isActive())
             throw new InvalidAuthException("Your account is not active");
 
-        replyService.createReply(req, principal.getUserId());
+        replyService.saveReplyByUserId(req, principal.getUserId());
     }
 
     @GetMapping("/post")
