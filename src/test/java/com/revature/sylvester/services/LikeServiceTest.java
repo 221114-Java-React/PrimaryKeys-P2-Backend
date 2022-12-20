@@ -1,18 +1,22 @@
 package com.revature.sylvester.services;
 
+
 import com.revature.sylvester.entities.Like;
+import com.revature.sylvester.entities.Post;
+import com.revature.sylvester.entities.User;
 import com.revature.sylvester.repositories.LikeRepository;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class LikeServiceTest {
+public class LikeServiceTest {
     private LikeService sut;
     private final LikeRepository mockLikeRepo = Mockito.mock(LikeRepository.class);
 
@@ -22,7 +26,7 @@ class LikeServiceTest {
     }
 
     @Test
-    void test_saveLikeByUserIdAndPostId_givenValidUserIdAndPostId() {
+    public void test_saveLikeByUserIdAndPostId_givenValidUserIdAndPostId() {
         // Arrange
         LikeService spySut = Mockito.spy(sut);
         String validUserId = UUID.randomUUID().toString();
@@ -32,19 +36,37 @@ class LikeServiceTest {
         spySut.saveLikeByUserIdAndPostId(validUserId, validPostId);
 
         // Assert
-        Mockito.verify(mockLikeRepo, Mockito.times(1)).save(UUID.randomUUID().toString(),
-                validUserId, validPostId);
+        Mockito.verify(mockLikeRepo, Mockito.times(1)).save(Mockito.anyString(),
+                Mockito.eq(validUserId), Mockito.eq(validPostId));
     }
 
     @Test
-    void test_deleteLikeByUserIdAndPostId() {
+    public void test_deleteLikeByUserIdAndPostId_givenValidUserIdAndPostId() {
+        // Arrange
+        LikeService spySut = Mockito.spy(sut);
+        String validUserId = UUID.randomUUID().toString();
+        String validPostId = UUID.randomUUID().toString();
+
+        // Act
+        spySut.deleteLikeByUserIdAndPostId(validUserId, validPostId);
+
+        // Assert
+        Mockito.verify(mockLikeRepo, Mockito.times(1)).delete(Mockito.eq(validUserId),
+                Mockito.eq(validPostId));
     }
 
     @Test
-    void test_getAllLikesByUserId_givenValidUserId() {
+    public void test_getAllLikesByUserId_givenValidUserId() {
         // Arrange
         String validUserId = UUID.randomUUID().toString();
-        List<Like> stubbedLikes = Arrays.asList(new Like(), new Like(), new Like());
+        List<Like> stubbedLikes = new ArrayList<>();
+        User user = new User(validUserId, "testUsername", "mRMEY476",
+                "testUsername@testUsername.com", new Date(2022,12,13), true,
+                null);
+
+        Like like = new Like(UUID.randomUUID().toString(), user,null);
+        stubbedLikes.add(like);
+
         Mockito.when(mockLikeRepo.findAllByUserId(validUserId)).thenReturn(stubbedLikes);
 
         // Act
@@ -52,13 +74,79 @@ class LikeServiceTest {
 
         // Assert
         assertFalse(condition.isEmpty());
+        assertEquals(validUserId, condition.get(0).getUser().getUserId());
     }
 
     @Test
-    void test_getAllLikesByPostId() {
+    public void test_getAllLikesByPostId_givenValidPostId() {
+        // Arrange
+        String validPostId = UUID.randomUUID().toString();
+        List<Like> stubbedLikes = new ArrayList<>();
+        Post post = new Post(validPostId, new Date(2022,12,13), "first post", null);
+
+        Like like = new Like(UUID.randomUUID().toString(), null, post);
+        stubbedLikes.add(like);
+
+        Mockito.when(mockLikeRepo.findAllByUserId(validPostId)).thenReturn(stubbedLikes);
+
+        // Act
+        List<Like> condition = sut.getAllLikesByUserId(validPostId);
+
+        // Assert
+        assertFalse(condition.isEmpty());
+        assertEquals(validPostId, condition.get(0).getPost().getPostId());
     }
 
     @Test
-    void test_isLiked() {
+    public void test_getAllLikedPostIdsByUserId_givenValidUserId() {
+        // Arrange
+        String validUserId = UUID.randomUUID().toString();
+        List<String> stubbedLikedPostIds = new ArrayList<>();
+        String likedPostId = UUID.randomUUID().toString();
+        stubbedLikedPostIds.add(likedPostId);
+
+        Mockito.when(mockLikeRepo.findAllLikedPostIdsByUserId(validUserId)).thenReturn(stubbedLikedPostIds);
+
+        // Act
+        List<String> condition = sut.getAllLikedPostIdsByUserId(validUserId);
+
+        // Assert
+        assertFalse(condition.isEmpty());
+    }
+
+    @Test
+    public void test_getLikeCountByPostId_givenValidPostId() {
+        // Arrange
+        String validPostId = UUID.randomUUID().toString();
+
+        Mockito.when(mockLikeRepo.countAllLikesByPostId(validPostId)).thenReturn(3);
+
+        // Act
+        int condition = sut.getLikeCountByPostId(validPostId);
+
+        // Assert
+        assertEquals(3, condition);
+    }
+
+    @Test
+    public void test_isLiked_givenValidUserIdAndPostId() {
+        // Arrange
+        String validUserId = UUID.randomUUID().toString();
+        String validPostId = UUID.randomUUID().toString();
+
+        User user = new User(validUserId, "testUsername", "mRMEY476",
+                "testUsername@testUsername.com", new Date(2022,12,13), true,
+                null);
+
+        Post post = new Post(validPostId, new Date(2022,12,13), "first post", null);
+        Like stubbedLike = new Like(UUID.randomUUID().toString(), user, post);
+
+        Mockito.when(mockLikeRepo.findByUserIdAndPostId(validUserId, validPostId)).thenReturn(stubbedLike);
+
+        // Act
+        boolean condition = sut.isLiked(validUserId, validPostId);
+
+        // Assert
+        assertTrue(condition);
     }
 }

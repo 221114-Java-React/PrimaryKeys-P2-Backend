@@ -42,14 +42,15 @@ public class UserController {
                         if(userService.isValidEmail(req.getEmail())) {
                             if(!userService.isDuplicateEmail(req.getEmail())) {
                                 if(!profileService.isEmptyDisplayName(req.getDisplayName())) {
-                                    if (profileService.isValidBirthDate(req.getBirthDate())) {
+                                    if(profileService.isValidBirthDate(req.getBirthDate())) {
                                         createdUser = userService.signup(req);
                                         UserProfile createdProfile = profileService.createProfile(req, createdUser);
                                         principal = userService.login(createdUser);
                                         String token = tokenService.generateToken(principal);
                                         principal.setToken(token);
                                     } else
-                                        throw new InvalidProfileException("Must be 13 years or older to create a profile");
+                                        throw new InvalidProfileException("Must be 13 years or older to create a " +
+                                                "profile");
                                 } else
                                     throw new InvalidProfileException("Please enter a display name");
                             } else
