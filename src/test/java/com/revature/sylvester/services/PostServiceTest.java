@@ -155,11 +155,11 @@ public class PostServiceTest {
         List<Post> posts = new ArrayList<>();
         posts.add(post1);
 
-        Mockito.when(mockPostRepo.sortAllByPosted()).thenReturn(posts);
-        Mockito.when(spySut.sortAllPostsByPosted()).thenReturn(posts);
+        Mockito.when(mockPostRepo.filterByPosted()).thenReturn(posts);
+        Mockito.when(spySut.filterPostsByPosted()).thenReturn(posts);
 
         // Act
-        List<Post> newPosts = spySut.sortAllPostsByPosted();
+        List<Post> newPosts = spySut.filterPostsByPosted();
 
         // Assert
         Post newPost = newPosts.get(0);
