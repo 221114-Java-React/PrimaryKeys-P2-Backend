@@ -57,13 +57,12 @@ public class Post {
         this.imgUrl = imgUrl;
     }
 
-    public Post(String postId, Date posted, String content, String imgUrl, User user, List<Like> likes) {
+    public Post(String postId, Date posted, String content, String imgUrl, User user) {
         this.postId = postId;
         this.posted = posted;
         this.content = content;
         this.imgUrl = imgUrl;
         this.user = user;
-        this.likes = likes;
     }
 
     public Post(String postId, Date posted, String content, String imgUrl, User user, List<Like> likes, List<Reply> replies) {
