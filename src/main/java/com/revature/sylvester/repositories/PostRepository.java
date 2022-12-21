@@ -11,6 +11,10 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends CrudRepository<Post, String> {
+    @Modifying
+    @Query(value = "SELECT * FROM posts ORDER BY posted DESC", nativeQuery = true)
+    List<Post> findAll();
+
     @Query(value = "SELECT * FROM users WHERE post_id = ?1", nativeQuery = true)
     Post findByPostId(String post_id);
 
@@ -22,6 +26,6 @@ public interface PostRepository extends CrudRepository<Post, String> {
     @Query(value = "SELECT * FROM posts WHERE user_id = ?1", nativeQuery = true)
     List<Post> findAllByUserId(String userId);
 
-    @Query(value = "SELECT * FROM posts ORDER BY posted DESC", nativeQuery = true)
-    List<Post> sortAllByPosted();
+    @Query(value = "SELECT * FROM posts ORDER BY posted DESC LIMIT ?1", nativeQuery = true)
+    List<Post> filterByPosted(int limit);
 }

@@ -46,8 +46,8 @@ public class PostService {
         return filteredPosts;
     }
 
-    public List<Post> sortAllPostsByPosted() {
-        return postRepo.sortAllByPosted();
+    public List<Post> filterPostsByPosted(int limit) {
+        return postRepo.filterByPosted(limit);
     }
 
     public boolean isValidContent(String content) {

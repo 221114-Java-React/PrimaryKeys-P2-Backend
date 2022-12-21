@@ -118,7 +118,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void test_correctSortAllPostsByPosted_givenNothing() {
+    public void test_correctFilterPostsByPosted_givenNothing() {
         // Arrange
         PostService spySut = Mockito.spy(sut);
         User user1 = new User("0", "testUsername", "mRMEY476",
@@ -131,11 +131,11 @@ public class PostServiceTest {
         List<Post> posts = new ArrayList<>();
         posts.add(post1);
 
-        Mockito.when(mockPostRepo.sortAllByPosted()).thenReturn(posts);
-        Mockito.when(spySut.sortAllPostsByPosted()).thenReturn(posts);
+        Mockito.when(mockPostRepo.filterByPosted(5)).thenReturn(posts);
+        Mockito.when(spySut.filterPostsByPosted(5)).thenReturn(posts);
 
         // Act
-        List<Post> newPosts = spySut.sortAllPostsByPosted();
+        List<Post> newPosts = spySut.filterPostsByPosted(5);
 
         // Assert
         Post newPost = newPosts.get(0);

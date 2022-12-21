@@ -60,7 +60,7 @@ public class PostController {
     }
 
     @GetMapping("/liked")
-    public List<Post> filterAllByLiked(HttpServletRequest servReq) {
+    public List<Post> filterByLiked(HttpServletRequest servReq) {
         String token = servReq.getHeader("authorization");
 
         if(token == null || token.isEmpty())
@@ -79,8 +79,8 @@ public class PostController {
     }
 
     @GetMapping("/posted")
-    public List<Post> sortAllByPosted() {
-        return postService.sortAllPostsByPosted();
+    public List<Post> filterByPosted(@RequestParam int limit) {
+        return postService.filterPostsByPosted(limit);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
