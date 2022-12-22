@@ -51,7 +51,7 @@ public class PostServiceTest {
                 null);
 
         Post post1 = new Post("0", new Date(2022,12,13), "first post", null,
-                user1, "testUsername");
+                user1, "testUsername", "Test Display Name");
 
         List<Post> posts = new ArrayList<>();
         posts.add(post1);
@@ -89,7 +89,7 @@ public class PostServiceTest {
                 null);
 
         Post post1 = new Post("0", new Date(2022,12,13), "first post", null,
-                user1, "testUsername");
+                user1, "testUsername", "Test Display Name");
 
         List<Post> posts = new ArrayList<>();
         posts.add(post1);
@@ -128,7 +128,7 @@ public class PostServiceTest {
                 null);
 
         Post post1 = new Post("0", new Date(2022,12,13), "first post", null,
-                user1, "testUsername");
+                user1, "testUsername", "Test Display Name");
 
         List<Post> posts = new ArrayList<>();
         posts.add(post1);
@@ -182,10 +182,10 @@ public class PostServiceTest {
                 null);
 
         Post post1 = new Post("0", new Date(2022,12,13), "first post", null,
-                "testUsername");
+                null, null);
 
         Post post2 = new Post(userLikedPostId, new Date(2022,12,13), "sample post",
-                null, "testUsername");
+                null, null, null);
 
         List<Post> posts = new ArrayList<>();
         posts.add(post1);

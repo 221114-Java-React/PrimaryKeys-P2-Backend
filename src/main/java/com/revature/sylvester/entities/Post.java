@@ -33,6 +33,9 @@ public class Post {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "display_name")
+    private String displayName;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
@@ -53,29 +56,35 @@ public class Post {
         super();
     }
 
-    public Post(String postId, Date posted, String content, String imgUrl, String username) {
+    public Post(String postId, Date posted, String content, String imgUrl, String username, String displayName) {
         this.postId = postId;
         this.posted = posted;
         this.content = content;
         this.imgUrl = imgUrl;
         this.username = username;
+        this.displayName = displayName;
     }
 
-    public Post(String postId, Date posted, String content, String imgUrl, User user, String username) {
+    public Post(String postId, Date posted, String content, String imgUrl, User user, String username,
+                String displayName) {
         this.postId = postId;
         this.posted = posted;
         this.content = content;
         this.imgUrl = imgUrl;
         this.user = user;
         this.username = username;
+        this.displayName = displayName;
     }
 
-    public Post(String postId, Date posted, String content, String imgUrl, User user, List<Like> likes, List<Reply> replies) {
+    public Post(String postId, Date posted, String content, String imgUrl, User user, String username,
+                String displayName, List<Like> likes, List<Reply> replies) {
         this.postId = postId;
         this.posted = posted;
         this.content = content;
         this.imgUrl = imgUrl;
         this.user = user;
+        this.username = username;
+        this.displayName = displayName;
         this.likes = likes;
         this.replies = replies;
     }
@@ -128,6 +137,14 @@ public class Post {
         this.username = username;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
     public List<Like> getLikes() {
         return likes;
     }
@@ -153,6 +170,7 @@ public class Post {
                 ", imgUrl='" + imgUrl + '\'' +
                 ", user=" + user +
                 ", username='" + username + '\'' +
+                ", displayName='" + displayName + '\'' +
                 ", likes=" + likes +
                 ", replies=" + replies +
                 '}';

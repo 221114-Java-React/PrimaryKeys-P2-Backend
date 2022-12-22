@@ -52,7 +52,7 @@ public class ReplyServiceTest {
                 null);
 
         Post post = new Post(validPostId, new Date(2022,12,13), "first post",
-                null, user, "testUsername");
+                null, user, "testUsername", "Test Display Name");
 
         Reply reply = new Reply(UUID.randomUUID().toString(), "sample reply", new Date(), user, post);
         stubbedReplies.add(reply);

@@ -12,9 +12,10 @@ import java.util.List;
 @Repository
 public interface PostRepository extends CrudRepository<Post, String> {
     @Modifying
-    @Query(value = "INSERT INTO posts(post_id, posted, content, img_url, user_id, username) " +
-            "VALUES (?1, ?2, ?3, ?4, ?5, ?6)", nativeQuery = true)
-    void save(String postId, Date posted, String content, String imgUrl, String userId, String username);
+    @Query(value = "INSERT INTO posts(post_id, posted, content, img_url, user_id, username, display_name) " +
+            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)", nativeQuery = true)
+    void save(String postId, Date posted, String content, String imgUrl, String userId, String username,
+              String displayName);
 
     @Modifying
     @Query(value = "SELECT * FROM posts ORDER BY posted DESC", nativeQuery = true)
