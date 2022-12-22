@@ -36,15 +36,21 @@ public class Reply {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "display_name")
+    private String displayName;
+
     public Reply() {
     }
 
-    public Reply(String replyId, String reply, Date replied, User user, Post post) {
+    public Reply(String replyId, String reply, Date replied, User user, Post post, String username,
+                 String displayName) {
         this.replyId = replyId;
         this.reply = reply;
         this.replied = replied;
         this.user = user;
         this.post = post;
+        this.username = username;
+        this.displayName = displayName;
     }
 
     public String getReplyId() {
@@ -95,6 +101,14 @@ public class Reply {
         this.username = username;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
     @Override
     public String toString() {
         return "Reply{" +
@@ -104,6 +118,7 @@ public class Reply {
                 ", user=" + user +
                 ", post=" + post +
                 ", username='" + username + '\'' +
+                ", displayName='" + displayName + '\'' +
                 '}';
     }
 }

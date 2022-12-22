@@ -20,13 +20,17 @@ public class PostService {
         this.postRepo = postRepo;
     }
 
-    public void savePostByUserId(NewPostRequest req, String userId, String username) {
+    public void savePostByUserId(NewPostRequest req, String userId, String username, String displayName) {
         postRepo.save(UUID.randomUUID().toString(), new Date(), req.getContent(),
-                req.getImgUrl(), userId, username);
+                req.getImgUrl(), userId, username, displayName);
     }
 
     public List<Post> getAllPosts() {
         return (List <Post>) postRepo.findAll();
+    }
+
+    public Post getPostByPostId(String postId) {
+        return postRepo.findByPostId(postId);
     }
 
     public List<Post> getAllPostsByUserId(String userId) {
@@ -52,5 +56,9 @@ public class PostService {
 
     public boolean isValidContent(String content) {
         return content.length() <= 128;
+    }
+
+    public boolean isValidPostId(String postId) {
+        return postRepo.findByPostId(postId) != null;
     }
 }

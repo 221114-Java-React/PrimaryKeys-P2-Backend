@@ -10,9 +10,10 @@ import java.util.List;
 
 public interface ReplyRepository extends CrudRepository<Reply, String> {
     @Modifying
-    @Query(value = "INSERT INTO replies(reply_id, reply, replied, user_id, post_id, username) " +
-            "VALUES (?1, ?2, ?3, ?4, ?5, ?6)", nativeQuery = true)
-    void save(String replyId, String reply, Date replied, String userId, String postId, String username);
+    @Query(value = "INSERT INTO replies(reply_id, reply, replied, user_id, post_id, username, display_name) " +
+            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)", nativeQuery = true)
+    void save(String replyId, String reply, Date replied, String userId, String postId, String username,
+              String displayName);
 
     @Query(value = "SELECT * FROM replies WHERE post_id = ?1 ORDER BY replied ASC", nativeQuery = true)
     List<Reply> findAllByPostId(String postId);

@@ -83,7 +83,7 @@ public class LikeServiceTest {
         String validPostId = UUID.randomUUID().toString();
         List<Like> stubbedLikes = new ArrayList<>();
         Post post = new Post(validPostId, new Date(2022,12,13), "first post", null,
-                null);
+                null, null);
 
         Like like = new Like(UUID.randomUUID().toString(), null, post);
         stubbedLikes.add(like);
@@ -140,7 +140,7 @@ public class LikeServiceTest {
                 null);
 
         Post post = new Post(validPostId, new Date(2022,12,13), "first post", null,
-                null);
+                null, null);
 
         Like stubbedLike = new Like(UUID.randomUUID().toString(), user, post);
 
