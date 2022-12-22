@@ -33,6 +33,9 @@ public class Reply {
     @JsonBackReference // child
     private Post post;
 
+    @Column(name = "username")
+    private String username;
+
     public Reply() {
     }
 
@@ -84,6 +87,14 @@ public class Reply {
         this.post = post;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
         return "Reply{" +
@@ -92,6 +103,7 @@ public class Reply {
                 ", replied=" + replied +
                 ", user=" + user +
                 ", post=" + post +
+                ", username='" + username + '\'' +
                 '}';
     }
 }

@@ -82,7 +82,8 @@ public class LikeServiceTest {
         // Arrange
         String validPostId = UUID.randomUUID().toString();
         List<Like> stubbedLikes = new ArrayList<>();
-        Post post = new Post(validPostId, new Date(2022,12,13), "first post", null);
+        Post post = new Post(validPostId, new Date(2022,12,13), "first post", null,
+                null);
 
         Like like = new Like(UUID.randomUUID().toString(), null, post);
         stubbedLikes.add(like);
@@ -138,7 +139,9 @@ public class LikeServiceTest {
                 "testUsername@testUsername.com", new Date(2022,12,13), true,
                 null);
 
-        Post post = new Post(validPostId, new Date(2022,12,13), "first post", null);
+        Post post = new Post(validPostId, new Date(2022,12,13), "first post", null,
+                null);
+
         Like stubbedLike = new Like(UUID.randomUUID().toString(), user, post);
 
         Mockito.when(mockLikeRepo.findByUserIdAndPostId(validUserId, validPostId)).thenReturn(stubbedLike);

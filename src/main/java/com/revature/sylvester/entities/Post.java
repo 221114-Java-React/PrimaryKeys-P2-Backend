@@ -30,6 +30,9 @@ public class Post {
     @JsonBackReference // child
     private User user;
 
+    @Column(name = "username")
+    private String username;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
@@ -50,19 +53,21 @@ public class Post {
         super();
     }
 
-    public Post(String postId, Date posted, String content, String imgUrl) {
+    public Post(String postId, Date posted, String content, String imgUrl, String username) {
         this.postId = postId;
         this.posted = posted;
         this.content = content;
         this.imgUrl = imgUrl;
+        this.username = username;
     }
 
-    public Post(String postId, Date posted, String content, String imgUrl, User user) {
+    public Post(String postId, Date posted, String content, String imgUrl, User user, String username) {
         this.postId = postId;
         this.posted = posted;
         this.content = content;
         this.imgUrl = imgUrl;
         this.user = user;
+        this.username = username;
     }
 
     public Post(String postId, Date posted, String content, String imgUrl, User user, List<Like> likes, List<Reply> replies) {
@@ -115,6 +120,14 @@ public class Post {
         this.user = user;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public List<Like> getLikes() {
         return likes;
     }
@@ -139,6 +152,7 @@ public class Post {
                 ", content='" + content + '\'' +
                 ", imgUrl='" + imgUrl + '\'' +
                 ", user=" + user +
+                ", username='" + username + '\'' +
                 ", likes=" + likes +
                 ", replies=" + replies +
                 '}';

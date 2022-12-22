@@ -31,13 +31,15 @@ public class PostServiceTest {
         PostService spySut = Mockito.spy(sut);
         NewPostRequest req = new NewPostRequest("sample content", null);
         String userId = UUID.randomUUID().toString();
+        String username = "testUsername";
 
         // Act
-        spySut.savePostByUserId(req, userId);
+        spySut.savePostByUserId(req, userId, username);
 
         // Assert
         Mockito.verify(mockPostRepo, Mockito.times(1)).save(Mockito.anyString(),
-                Mockito.any(Date.class), Mockito.eq(req.getContent()), Mockito.eq(req.getImgUrl()), Mockito.eq(userId));
+                Mockito.any(Date.class), Mockito.eq(req.getContent()), Mockito.eq(req.getImgUrl()), Mockito.eq(userId),
+                Mockito.eq(username));
     }
 
     @Test
@@ -49,7 +51,7 @@ public class PostServiceTest {
                 null);
 
         Post post1 = new Post("0", new Date(2022,12,13), "first post", null,
-                user1);
+                user1, "testUsername");
 
         List<Post> posts = new ArrayList<>();
         posts.add(post1);
@@ -87,7 +89,7 @@ public class PostServiceTest {
                 null);
 
         Post post1 = new Post("0", new Date(2022,12,13), "first post", null,
-                user1);
+                user1, "testUsername");
 
         List<Post> posts = new ArrayList<>();
         posts.add(post1);
@@ -126,7 +128,7 @@ public class PostServiceTest {
                 null);
 
         Post post1 = new Post("0", new Date(2022,12,13), "first post", null,
-                user1);
+                user1, "testUsername");
 
         List<Post> posts = new ArrayList<>();
         posts.add(post1);
@@ -179,10 +181,11 @@ public class PostServiceTest {
                 "testUsername@testUsername.com", new Date(2022,12,13), true,
                 null);
 
-        Post post1 = new Post("0", new Date(2022,12,13), "first post", null);
+        Post post1 = new Post("0", new Date(2022,12,13), "first post", null,
+                "testUsername");
 
         Post post2 = new Post(userLikedPostId, new Date(2022,12,13), "sample post",
-                null);
+                null, "testUsername");
 
         List<Post> posts = new ArrayList<>();
         posts.add(post1);

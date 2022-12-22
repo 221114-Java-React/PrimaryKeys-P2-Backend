@@ -20,9 +20,9 @@ public class PostService {
         this.postRepo = postRepo;
     }
 
-    public void savePostByUserId(NewPostRequest req, String userId) {
+    public void savePostByUserId(NewPostRequest req, String userId, String username) {
         postRepo.save(UUID.randomUUID().toString(), new Date(), req.getContent(),
-                req.getImgUrl(), userId);
+                req.getImgUrl(), userId, username);
     }
 
     public List<Post> getAllPosts() {

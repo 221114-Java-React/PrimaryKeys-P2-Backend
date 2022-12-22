@@ -31,14 +31,15 @@ public class ReplyServiceTest {
         ReplyService spySut = Mockito.spy(sut);
         NewReplyRequest stubbedReq = new NewReplyRequest("sample reply", UUID.randomUUID().toString());
         String validUserId = UUID.randomUUID().toString();
+        String username = "testUsername";
 
         // Act
-        spySut.saveReplyByUserId(stubbedReq, validUserId);
+        spySut.saveReplyByUserId(stubbedReq, validUserId, username);
 
         // Assert
         Mockito.verify(mockReplyRepo, Mockito.times(1)).save(Mockito.anyString(),
                 Mockito.eq(stubbedReq.getReply()), Mockito.any(Date.class), Mockito.eq(validUserId),
-                Mockito.anyString());
+                Mockito.anyString(), Mockito.eq(username));
     }
 
     @Test
@@ -51,7 +52,7 @@ public class ReplyServiceTest {
                 null);
 
         Post post = new Post(validPostId, new Date(2022,12,13), "first post",
-                null, user);
+                null, user, "testUsername");
 
         Reply reply = new Reply(UUID.randomUUID().toString(), "sample reply", new Date(), user, post);
         stubbedReplies.add(reply);
