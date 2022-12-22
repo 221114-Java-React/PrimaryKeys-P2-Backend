@@ -32,14 +32,15 @@ public class PostServiceTest {
         NewPostRequest req = new NewPostRequest("sample content", null);
         String userId = UUID.randomUUID().toString();
         String username = "testUsername";
+        String displayName = "Test Display Name";
 
         // Act
-        spySut.savePostByUserId(req, userId, username);
+        spySut.savePostByUserId(req, userId, username, displayName);
 
         // Assert
         Mockito.verify(mockPostRepo, Mockito.times(1)).save(Mockito.anyString(),
                 Mockito.any(Date.class), Mockito.eq(req.getContent()), Mockito.eq(req.getImgUrl()), Mockito.eq(userId),
-                Mockito.eq(username));
+                Mockito.eq(username), Mockito.eq(displayName));
     }
 
     @Test
