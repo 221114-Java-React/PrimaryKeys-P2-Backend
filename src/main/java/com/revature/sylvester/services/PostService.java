@@ -29,6 +29,10 @@ public class PostService {
         return (List <Post>) postRepo.findAll();
     }
 
+    public Post getPostByPostId(String postId) {
+        return postRepo.findByPostId(postId);
+    }
+
     public List<Post> getAllPostsByUserId(String userId) {
         return postRepo.findAllByUserId(userId);
     }
@@ -52,5 +56,9 @@ public class PostService {
 
     public boolean isValidContent(String content) {
         return content.length() <= 128;
+    }
+
+    public boolean isValidPostId(String postId) {
+        return postRepo.findByPostId(postId) != null;
     }
 }

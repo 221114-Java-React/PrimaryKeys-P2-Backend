@@ -21,8 +21,8 @@ public interface PostRepository extends CrudRepository<Post, String> {
     @Query(value = "SELECT * FROM posts ORDER BY posted DESC", nativeQuery = true)
     List<Post> findAll();
 
-    @Query(value = "SELECT * FROM users WHERE post_id = ?1 ORDER BY posted DESC", nativeQuery = true)
-    Post findByPostId(String post_id);
+    @Query(value = "SELECT * FROM posts WHERE post_id = ?1", nativeQuery = true)
+    Post findByPostId(String postId);
 
     @Query(value = "SELECT * FROM posts WHERE user_id = ?1 ORDER BY posted DESC", nativeQuery = true)
     List<Post> findAllByUserId(String userId);

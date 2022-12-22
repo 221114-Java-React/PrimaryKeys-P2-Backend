@@ -91,7 +91,7 @@ public class PostController {
         return postService.filterPostsByPosted(limit);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidPostException.class)
     public InvalidPostException handledPostException (InvalidPostException e) {
         return e;

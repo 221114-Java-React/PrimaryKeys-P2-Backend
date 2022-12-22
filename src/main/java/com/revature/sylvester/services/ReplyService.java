@@ -19,11 +19,16 @@ public class ReplyService {
         this.replyRepo = replyRepo;
     }
 
-    public void saveReplyByUserId(NewReplyRequest req, String userId, String username) {
-        replyRepo.save(UUID.randomUUID().toString(), req.getReply(), new Date(), userId, req.getPostId(), username);
+    public void saveReplyByUserId(NewReplyRequest req, String userId, String username, String displayName) {
+        replyRepo.save(UUID.randomUUID().toString(), req.getReply(), new Date(), userId, req.getPostId(), username,
+                displayName);
     }
 
     public List<Reply> getAllRepliesByPostId(String postId) {
         return replyRepo.findAllByPostId(postId);
+    }
+
+    public boolean isValidContent(String content) {
+        return content.length() <= 128;
     }
 }
