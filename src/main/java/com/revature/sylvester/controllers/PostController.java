@@ -44,7 +44,7 @@ public class PostController {
             throw new InvalidAuthException("Your account is not active");
 
         if(postService.isValidContent(req.getContent()))
-            postService.savePostByUserId(req, principal.getUserId());
+            postService.savePostByUserId(req, principal.getUserId(), principal.getUsername());
         else
             throw new InvalidPostException("Post content must be 128 characters or less");
     }

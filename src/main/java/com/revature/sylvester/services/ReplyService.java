@@ -19,8 +19,8 @@ public class ReplyService {
         this.replyRepo = replyRepo;
     }
 
-    public void saveReplyByUserId(NewReplyRequest req, String userId) {
-        replyRepo.save(UUID.randomUUID().toString(), req.getReply(), new Date(), userId, req.getPostId());
+    public void saveReplyByUserId(NewReplyRequest req, String userId, String username) {
+        replyRepo.save(UUID.randomUUID().toString(), req.getReply(), new Date(), userId, req.getPostId(), username);
     }
 
     public List<Reply> getAllRepliesByPostId(String postId) {
