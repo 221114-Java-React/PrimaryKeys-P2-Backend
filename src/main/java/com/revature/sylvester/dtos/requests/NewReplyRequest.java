@@ -3,10 +3,12 @@ package com.revature.sylvester.dtos.requests;
 public class NewReplyRequest {
     private String reply;
     private String postId;
+    private String imgUrl;
 
-    public NewReplyRequest(String reply, String postId) {
+    public NewReplyRequest(String reply, String postId, String imgUrl) {
         this.reply = reply;
         this.postId = postId;
+        this.imgUrl = imgUrl;
     }
 
     public String getReply() {
@@ -25,11 +27,20 @@ public class NewReplyRequest {
         this.postId = postId;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     @Override
     public String toString() {
-        return "NewCommentRequest{" +
+        return "NewReplyRequest{" +
                 "reply='" + reply + '\'' +
                 ", postId='" + postId + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
                 '}';
     }
 }
