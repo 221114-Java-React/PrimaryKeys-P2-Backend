@@ -64,6 +64,7 @@ CREATE table replies (
 	reply_id VARCHAR(255) primary key,
 	reply VARCHAR(255) not null,
 	replied TIMESTAMP not null,
+	img_url VARCHAR(255),
 	user_id VARCHAR(255) not null REFERENCES users(user_id),
 	post_id VARCHAR(255) not null REFERENCES posts(post_id)
 );

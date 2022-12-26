@@ -17,6 +17,9 @@ public class Reply {
     @Column(name = "replied", nullable = false)
     private Date replied;
 
+    @Column(name = "img_url")
+    private String imgUrl;
+
     @ManyToOne
     @JoinColumn(
             name = "user_id",
@@ -42,11 +45,13 @@ public class Reply {
     public Reply() {
     }
 
-    public Reply(String replyId, String reply, Date replied, User user, Post post, String username,
+
+    public Reply(String replyId, String reply, Date replied, String imgUrl, User user, Post post, String username,
                  String displayName) {
         this.replyId = replyId;
         this.reply = reply;
         this.replied = replied;
+        this.imgUrl = imgUrl;
         this.user = user;
         this.post = post;
         this.username = username;
@@ -109,12 +114,21 @@ public class Reply {
         this.displayName = displayName;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     @Override
     public String toString() {
         return "Reply{" +
                 "replyId='" + replyId + '\'' +
                 ", reply='" + reply + '\'' +
                 ", replied=" + replied +
+                ", imgUrl='" + imgUrl + '\'' +
                 ", user=" + user +
                 ", post=" + post +
                 ", username='" + username + '\'' +

@@ -20,7 +20,7 @@ public class ReplyService {
     }
 
     public void saveReplyByUserId(NewReplyRequest req, String userId, String username, String displayName) {
-        replyRepo.save(UUID.randomUUID().toString(), req.getReply(), new Date(), userId, req.getPostId(), username,
+        replyRepo.save(UUID.randomUUID().toString(), req.getReply(), new Date(), req.getImgUrl(), userId, req.getPostId(), username,
                 displayName);
     }
 
