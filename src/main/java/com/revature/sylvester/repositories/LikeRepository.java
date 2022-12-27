@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface LikeRepository extends CrudRepository<Like, String> {
     @Modifying
-    @Query(value = "INSERT INTO likes(like_id, user_id, post_id) VALUES (?1, ?2, ?3)",
+    @Query(value = "INSERT INTO likes(like_id, user_id, post_id, username, display_name) VALUES (?1, ?2, ?3, ?4, ?5)",
             nativeQuery = true)
-    void save(String likeId, String userId, String postId);
+    void save(String likeId, String userId, String postId, String username, String displayName);
 
     @Modifying
     @Query(value = "DELETE FROM likes WHERE user_id = ?1 AND post_id = ?2", nativeQuery = true)
