@@ -4,15 +4,10 @@ import com.revature.sylvester.dtos.requests.NewLoginRequest;
 import com.revature.sylvester.dtos.requests.NewUserRequest;
 import com.revature.sylvester.dtos.responses.Principal;
 import com.revature.sylvester.entities.User;
-import com.revature.sylvester.entities.UserProfile;
-import com.revature.sylvester.repositories.UserProfileRepository;
 import com.revature.sylvester.repositories.UserRepository;
 import com.revature.sylvester.utils.custom_exceptions.InvalidAuthException;
-import com.revature.sylvester.utils.custom_exceptions.InvalidProfileException;
-import com.revature.sylvester.utils.custom_exceptions.InvalidUserException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -72,8 +67,8 @@ public class UserService {
         return (List<User>) userRepo.findAll();
     }
 
-    public List<User> getAllUsersByUsername(String username) {
-        return userRepo.findAllByUsername(username);
+    public User getUserByUsername(String username) {
+        return userRepo.findByUsername(username);
     }
 
     public boolean isValidUsername(String username) {
