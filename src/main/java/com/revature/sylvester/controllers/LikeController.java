@@ -2,8 +2,10 @@ package com.revature.sylvester.controllers;
 
 import com.revature.sylvester.dtos.responses.Principal;
 import com.revature.sylvester.entities.Like;
+import com.revature.sylvester.entities.UserProfile;
 import com.revature.sylvester.services.LikeService;
 import com.revature.sylvester.services.TokenService;
+import com.revature.sylvester.services.UserProfileService;
 import com.revature.sylvester.utils.custom_exceptions.InvalidAuthException;
 import com.revature.sylvester.utils.custom_exceptions.InvalidLikeException;
 import com.revature.sylvester.utils.custom_exceptions.InvalidPostException;
@@ -18,10 +20,12 @@ import java.util.List;
 @RequestMapping("/likes")
 public class LikeController {
     private final LikeService likeService;
+    private final UserProfileService profileService;
     private final TokenService tokenService;
 
-    public LikeController(LikeService likeService, TokenService tokenService) {
+    public LikeController(LikeService likeService, UserProfileService profileService, TokenService tokenService) {
         this.likeService = likeService;
+        this.profileService = profileService;
         this.tokenService = tokenService;
     }
 
@@ -38,9 +42,10 @@ public class LikeController {
             throw new InvalidAuthException("Please log in to like a post");
 
         String userId = principal.getUserId();
+        UserProfile profile = profileService.getProfileByUserId(userId);
 
         if(!likeService.isLiked(userId, id))
-            likeService.saveLikeByUserIdAndPostId(userId, id);
+            likeService.saveLikeByUserIdAndPostId(userId, id, principal.getUsername(), profile.getDisplayName());
         else
             throw new InvalidLikeException("You have already liked this post");
     }
