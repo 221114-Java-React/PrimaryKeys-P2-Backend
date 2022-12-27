@@ -5,7 +5,6 @@ import com.revature.sylvester.dtos.requests.NewUserRequest;
 import com.revature.sylvester.dtos.responses.Principal;
 import com.revature.sylvester.entities.User;
 import com.revature.sylvester.repositories.UserRepository;
-import com.revature.sylvester.services.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -147,19 +146,12 @@ public class UserServiceTest {
                 "testUsername@testUsername.com", new Date(2022,12,13), true,
                 null);
 
-        List<User> users = new ArrayList<>();
-        users.add(user1);
-
-        Mockito.when(spySut.getAllUsersByUsername("testUsername")).thenReturn(users);
+        Mockito.when(spySut.getUserByUsername("testUsername")).thenReturn(user1);
 
         // Act
-        List<User> newUsers = spySut.getAllUsersByUsername("testUsername");
+        User newUser = spySut.getUserByUsername("testUsername");
 
         // Assert
-        assertEquals(1, newUsers.size());
-
-        User newUser = newUsers.get(0);
-
         assertEquals("0",newUser.getUserId());
         assertEquals("testUsername",newUser.getUsername());
         assertEquals("mRMEY476",newUser.getPassword());
