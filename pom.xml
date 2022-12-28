@@ -17,6 +17,15 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.revature.sylvester.Main</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <properties>
