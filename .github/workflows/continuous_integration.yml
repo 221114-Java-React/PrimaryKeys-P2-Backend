@@ -42,3 +42,14 @@ jobs:
           source: "*"
           target: "deployment"
           
+      - name: Run Server
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd deployment
+            make run
+            
