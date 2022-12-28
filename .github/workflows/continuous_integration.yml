@@ -41,7 +41,10 @@ jobs:
           port: ${{ secrets.PORT }}
           source: "*"
           target: "deployment"
-          
+
+      - name: Testing
+        run: which ssh
+
       - name: Run Server
         uses: appleboy/ssh-action@v0.1.6
         with:
