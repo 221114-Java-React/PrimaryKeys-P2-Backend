@@ -42,24 +42,13 @@ jobs:
           source: "*"
           target: "deployment"
           
-#       - name: Run Server
-#         uses: appleboy/ssh-action@v0.1.6
-#         with:
-#           host: ${{ secrets.HOST }}
-#           username: ${{ secrets.USERNAME }}
-#           key: ${{ secrets.KEY }}
-#           port: ${{ secrets.PORT }}
-#           script: |
-#             cd deployment
-#             make run
-            
       - name: Run Server
-        uses: garygrossgarten/github-action-ssh@release
+        uses: appleboy/ssh-action@v0.1.6
         with:
-          command: |
-            cd deployment
-            make run
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          privateKey: ${{ secrets.PRIVATE_KEY}}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd deployment
+            make run &
