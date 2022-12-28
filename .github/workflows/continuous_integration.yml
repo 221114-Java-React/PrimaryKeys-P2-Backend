@@ -51,4 +51,4 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd deployment
-            make run &
+            (make run & && echo "Server Started")
