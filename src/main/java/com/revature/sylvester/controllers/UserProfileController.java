@@ -58,7 +58,7 @@ public class UserProfileController {
 
         if(!profileService.isEmptyDisplayName(req.getDisplayName())) {
             if(profileService.isValidBirthDate(req.getBirthDate())) {
-                profileService.updateProfile(req, principal.getUsername(), updatedProfile.getProfileId());
+                profileService.updateProfile(req, updatedProfile.getProfileId());
             } else
                 throw new InvalidUserException("Must be 13 years or older");
         } else
