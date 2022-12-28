@@ -45,14 +45,6 @@ public class Reply {
     public Reply() {
     }
 
-    public Reply(String replyId, String reply, Date replied, String imgUrl, String username, String displayName) {
-        this.replyId = replyId;
-        this.reply = reply;
-        this.replied = replied;
-        this.imgUrl = imgUrl;
-        this.username = username;
-        this.displayName = displayName;
-    }
 
     public Reply(String replyId, String reply, Date replied, String imgUrl, User user, Post post, String username,
                  String displayName) {

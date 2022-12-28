@@ -38,7 +38,7 @@ public class UserProfileServiceTest {
                 null);
 
         UserProfile userProfile = new UserProfile("0", req.getDisplayName(), null, req.getBirthDate(),
-                null, null, null, user, user.getUsername());
+                null, null, null, user);
 
         Mockito.when(spySut.createProfile(req, user)).thenReturn(userProfile);
 
@@ -73,8 +73,7 @@ public class UserProfileServiceTest {
                 null);
 
         UserProfile userProfile = new UserProfile("0", "testDisplayName", null,
-                LocalDate.of(2022,12,13), null, null, null, user,
-                user.getUsername());
+                LocalDate.of(2022,12,13), null, null, null, user);
 
         Mockito.when(mockProfileRepo.findByUserId("0")).thenReturn(userProfile);
         Mockito.when(sut1.getProfileByUserId("0")).thenReturn(userProfile);
@@ -136,13 +135,12 @@ public class UserProfileServiceTest {
                 null);
 
         String profileId = UUID.randomUUID().toString();
-        String username = "newUsername";
 
         // Act
-        spySut.updateProfile(req, profileId, username);
+        spySut.updateProfile(req, profileId);
 
         // Assert
         Mockito.verify(mockProfileRepo, Mockito.times(1)).update(req.getDisplayName(), req.getLocation(),
-                req.getBirthDate(), req.getOccupation(), req.getBio(), req.getProfilePicUrl(), profileId, username);
+                req.getBirthDate(), req.getOccupation(), req.getBio(), req.getProfilePicUrl(), profileId);
     }
 }
