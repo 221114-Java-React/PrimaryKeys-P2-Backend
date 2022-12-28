@@ -40,5 +40,5 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           source: "target/sylvester-1.0.0-SNAPSHOT.jar"
-          destination: "deployment"
+          target: "deployment"
           
