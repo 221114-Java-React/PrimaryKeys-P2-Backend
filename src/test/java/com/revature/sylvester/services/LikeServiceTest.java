@@ -31,13 +31,15 @@ public class LikeServiceTest {
         LikeService spySut = Mockito.spy(sut);
         String validUserId = UUID.randomUUID().toString();
         String validPostId = UUID.randomUUID().toString();
+        String username = "testUsername";
+        String displayName = "Test Display Name";
 
         // Act
-        spySut.saveLikeByUserIdAndPostId(validUserId, validPostId);
+        spySut.saveLikeByUserIdAndPostId(validUserId, validPostId, username, displayName);
 
         // Assert
         Mockito.verify(mockLikeRepo, Mockito.times(1)).save(Mockito.anyString(),
-                Mockito.eq(validUserId), Mockito.eq(validPostId));
+                Mockito.eq(validUserId), Mockito.eq(validPostId), Mockito.eq(username), Mockito.eq(displayName));
     }
 
     @Test
@@ -64,7 +66,9 @@ public class LikeServiceTest {
                 "testUsername@testUsername.com", new Date(2022,12,13), true,
                 null);
 
-        Like like = new Like(UUID.randomUUID().toString(), user,null);
+        Like like = new Like(UUID.randomUUID().toString(), user, null, "testUsername",
+                "Test Display Name");
+
         stubbedLikes.add(like);
 
         Mockito.when(mockLikeRepo.findAllByUserId(validUserId)).thenReturn(stubbedLikes);
@@ -85,7 +89,7 @@ public class LikeServiceTest {
         Post post = new Post(validPostId, new Date(2022,12,13), "first post", null,
                 null, null);
 
-        Like like = new Like(UUID.randomUUID().toString(), null, post);
+        Like like = new Like(UUID.randomUUID().toString(), null, post, null, null);
         stubbedLikes.add(like);
 
         Mockito.when(mockLikeRepo.findAllByUserId(validPostId)).thenReturn(stubbedLikes);
@@ -142,7 +146,8 @@ public class LikeServiceTest {
         Post post = new Post(validPostId, new Date(2022,12,13), "first post", null,
                 null, null);
 
-        Like stubbedLike = new Like(UUID.randomUUID().toString(), user, post);
+        Like stubbedLike = new Like(UUID.randomUUID().toString(), user, post,
+                "testUsername", "Test Display Name");
 
         Mockito.when(mockLikeRepo.findByUserIdAndPostId(validUserId, validPostId)).thenReturn(stubbedLike);
 

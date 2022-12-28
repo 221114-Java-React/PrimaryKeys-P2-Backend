@@ -26,6 +26,12 @@ public class Like {
     @JsonBackReference // child
     private Post post;
 
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "display_name")
+    private String displayName;
+
     public Like() {
         super();
     }
@@ -34,10 +40,12 @@ public class Like {
         this.likeId = likeId;
     }
 
-    public Like(String likeId, User user, Post post) {
+    public Like(String likeId, User user, Post post, String username, String displayName) {
         this.likeId = likeId;
         this.user = user;
         this.post = post;
+        this.username = username;
+        this.displayName = displayName;
     }
 
     public String getLikeId() {
@@ -64,12 +72,30 @@ public class Like {
         this.post = post;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
     @Override
     public String toString() {
         return "Like{" +
                 "likeId='" + likeId + '\'' +
                 ", user=" + user +
                 ", post=" + post +
+                ", username='" + username + '\'' +
+                ", displayName='" + displayName + '\'' +
                 '}';
     }
 }

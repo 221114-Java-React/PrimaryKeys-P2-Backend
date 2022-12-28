@@ -17,8 +17,8 @@ public class LikeService {
         this.likeRepo = likeRepo;
     }
 
-    public void saveLikeByUserIdAndPostId(String userId, String postId) {
-        likeRepo.save(UUID.randomUUID().toString(), userId, postId);
+    public void saveLikeByUserIdAndPostId(String userId, String postId, String username, String displayName) {
+        likeRepo.save(UUID.randomUUID().toString(), userId, postId, username, displayName);
     }
 
     public void deleteLikeByUserIdAndPostId(String userId, String postId) {

@@ -1,6 +1,5 @@
 package com.revature.sylvester.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.sylvester.dtos.requests.NewUserRequest;
 import com.revature.sylvester.dtos.responses.Principal;
 import com.revature.sylvester.entities.User;
@@ -72,6 +71,11 @@ public class UserController {
     @GetMapping
     public List<User> getAll() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/username")
+    public User getAllByUsername(@RequestParam String username) {
+        return userService.getUserByUsername(username);
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
