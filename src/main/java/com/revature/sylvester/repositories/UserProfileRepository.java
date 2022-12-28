@@ -13,10 +13,10 @@ import java.util.List;
 public interface UserProfileRepository extends CrudRepository<UserProfile, String> {
     @Modifying
     @Query(value = "UPDATE user_profiles " +
-            "SET display_name = ?1, location = ?2, birth_date = ?3, occupation = ?4, bio = ?5, profile_pic_url = ?6 " +
-            "WHERE profile_id = ?7", nativeQuery = true)
+            "SET display_name = ?1, location = ?2, birth_date = ?3, occupation = ?4, bio = ?5, profile_pic_url = ?6, " +
+            "username = ?7 WHERE profile_id = ?8", nativeQuery = true)
     void update(String displayName, String location, LocalDate birthDate, String occupation, String bio,
-                String profilePicUrl, String profileId);
+                String profilePicUrl, String username, String profileId);
     @Query(value = "SELECT * FROM user_profiles WHERE user_id = ?1", nativeQuery = true)
     UserProfile findByUserId(String userId);
 

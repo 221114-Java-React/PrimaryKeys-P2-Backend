@@ -25,15 +25,15 @@ public class UserProfileService {
 
     public UserProfile createProfile(NewUserRequest req, User user) {
         UserProfile createdProfile = new UserProfile(UUID.randomUUID().toString(), req.getDisplayName(), null,
-                req.getBirthDate(), null, null, null, user);
+                req.getBirthDate(), null, null, null, user, user.getUsername());
 
         profileRepo.save(createdProfile);
         return createdProfile;
     }
 
-    public void updateProfile(UpdateProfileRequest req, String profileId) {
+    public void updateProfile(UpdateProfileRequest req, String username, String profileId) {
         profileRepo.update(req.getDisplayName(), req.getLocation(), req.getBirthDate(), req.getOccupation(),
-                req.getBio(), req.getProfilePicUrl(), profileId);
+                req.getBio(), req.getProfilePicUrl(), username, profileId);
     }
 
     public UserProfile getProfileByUserId(String userId) {

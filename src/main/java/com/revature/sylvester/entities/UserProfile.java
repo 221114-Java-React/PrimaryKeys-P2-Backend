@@ -37,12 +37,15 @@ public class UserProfile {
     @JsonBackReference // child
     private User user;
 
+    @Column(name = "username")
+    private String username;
+
     public UserProfile() {
         super();
     }
 
     public UserProfile(String profileId, String displayName, String location, LocalDate birthDate, String occupation,
-                       String bio, String profilePicUrl) {
+                       String bio, String profilePicUrl, String username) {
         this.profileId = profileId;
         this.displayName = displayName;
         this.location = location;
@@ -50,10 +53,11 @@ public class UserProfile {
         this.occupation = occupation;
         this.bio = bio;
         this.profilePicUrl = profilePicUrl;
+        this.username = username;
     }
 
     public UserProfile(String profileId, String displayName, String location, LocalDate birthDate, String occupation,
-                       String bio, String profilePicUrl, User user) {
+                       String bio, String profilePicUrl, User user, String username) {
         this.profileId = profileId;
         this.displayName = displayName;
         this.location = location;
@@ -62,6 +66,7 @@ public class UserProfile {
         this.bio = bio;
         this.profilePicUrl = profilePicUrl;
         this.user = user;
+        this.username = username;
     }
 
     public String getProfileId() {
@@ -128,6 +133,14 @@ public class UserProfile {
         this.user = user;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
         return "UserProfile{" +
@@ -139,6 +152,7 @@ public class UserProfile {
                 ", bio='" + bio + '\'' +
                 ", profilePicUrl='" + profilePicUrl + '\'' +
                 ", user=" + user +
+                ", username='" + username + '\'' +
                 '}';
     }
 }
