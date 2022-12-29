@@ -54,7 +54,7 @@ jobs:
         run: |
           chmod 600 key.pem
           ls -l
-          ssh -i key.pem ${{ secret.SSH_HOST }} echo "GOT HERE"
+          ssh -i key.pem ${{ secrets.SSH_HOST }} echo "GOT HERE"
 
 #       - name: Run Server
 #         uses: appleboy/ssh-action@v0.1.6
