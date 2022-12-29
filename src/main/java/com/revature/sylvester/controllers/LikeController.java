@@ -8,7 +8,6 @@ import com.revature.sylvester.services.TokenService;
 import com.revature.sylvester.services.UserProfileService;
 import com.revature.sylvester.utils.custom_exceptions.InvalidAuthException;
 import com.revature.sylvester.utils.custom_exceptions.InvalidLikeException;
-import com.revature.sylvester.utils.custom_exceptions.InvalidPostException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

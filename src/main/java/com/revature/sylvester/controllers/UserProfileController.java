@@ -7,7 +7,6 @@ import com.revature.sylvester.entities.User;
 import com.revature.sylvester.entities.UserProfile;
 import com.revature.sylvester.services.TokenService;
 import com.revature.sylvester.services.UserProfileService;
-import com.revature.sylvester.services.UserService;
 import com.revature.sylvester.utils.custom_exceptions.InvalidAuthException;
 import com.revature.sylvester.utils.custom_exceptions.InvalidProfileException;
 import com.revature.sylvester.utils.custom_exceptions.InvalidUserException;
