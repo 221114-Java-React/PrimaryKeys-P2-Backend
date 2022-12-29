@@ -1,7 +1,6 @@
 package com.revature.sylvester.services;
 
 import com.revature.sylvester.dtos.requests.NewPostRequest;
-import com.revature.sylvester.entities.Like;
 import com.revature.sylvester.entities.Post;
 import com.revature.sylvester.entities.User;
 import com.revature.sylvester.repositories.PostRepository;
