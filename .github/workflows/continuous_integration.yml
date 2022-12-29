@@ -13,7 +13,7 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Overwrite File
+      - name: Overwrite application.yaml
         uses: "DamianReeves/write-file-action@master"
         with:
           path: src/main/resources/application.yaml
@@ -21,7 +21,7 @@ jobs:
           contents: |
             ${{ secrets.APPLICATION_YML }}
             
-      - name: Overwrite File
+      - name: Overwrite resource.properties
         uses: "DamianReeves/write-file-action@master"
         with:
           path: src/main/resources/resource.properties
@@ -42,17 +42,25 @@ jobs:
           source: "*"
           target: "deployment"
 
-      - name: Testing
-        run: which ssh
-
-      - name: Run Server
-        uses: appleboy/ssh-action@v0.1.6
+      - name: Overwrite pem.key
+        uses: "DamianReeves/write-file-action@master"
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd deployment
-            (make run && echo "Server Started")
-            exit
+          path: key.pem
+          write-mode: overwrite
+          contents: |
+            ${{ secrets.KEY }}
+
+      - name: Testing
+        run: ssh -i key.pem ${{ secrets.HOST }}@${{ secrets.HOST }} echo "GOT HERE"
+
+#       - name: Run Server
+#         uses: appleboy/ssh-action@v0.1.6
+#         with:
+#           host: ${{ secrets.HOST }}
+#           username: ${{ secrets.USERNAME }}
+#           key: ${{ secrets.KEY }}
+#           port: ${{ secrets.PORT }}
+#           script: |
+#             cd deployment
+#             (make run && echo "Server Started")
+#             exit
