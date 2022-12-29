@@ -29,19 +29,6 @@ jobs:
           contents: |
             ${{ secrets.RESOURCE_PROPERTIES }}
             
-#       - name: Build with Maven
-#         run: mvn clean install
-
-#       - name: SCP Application JAR File to Deployment Server
-#         uses: appleboy/scp-action@master
-#         with:
-#           host: ${{ secrets.HOST }}
-#           username: ${{ secrets.USERNAME }}
-#           key: ${{ secrets.KEY }}
-#           port: ${{ secrets.PORT }}
-#           source: "*"
-#           target: "deployment"
-
       - name: Overwrite key.pem
         uses: "DamianReeves/write-file-action@master"
         with:
@@ -49,12 +36,19 @@ jobs:
           write-mode: overwrite
           contents: |
             ${{ secrets.KEY }}
+            
+#       - name: Build with Maven
+#         run: mvn clean install
 
-      - name: Testing
-        run: |
-          chmod 600 key.pem
-          ls -l
-          ssh -i key.pem ${{ secrets.SSH_HOST }} echo "GOT HERE"
+      - name: SCP Application JAR File to Deployment Server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          source: "*"
+          target: "deployment"
 
 #       - name: Run Server
 #         uses: appleboy/ssh-action@v0.1.6
