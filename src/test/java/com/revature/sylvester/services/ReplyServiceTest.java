@@ -14,7 +14,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class ReplyServiceTest {
     private ReplyService sut;
@@ -29,8 +30,9 @@ public class ReplyServiceTest {
     public void test_saveReplyByUserId_givenValidUserId() {
         // Arrange
         ReplyService spySut = Mockito.spy(sut);
-        String imgUrl = null;
-        NewReplyRequest stubbedReq = new NewReplyRequest("sample reply", UUID.randomUUID().toString(), imgUrl);
+        NewReplyRequest stubbedReq = new NewReplyRequest("sample reply", UUID.randomUUID().toString(),
+                null);
+
         String validUserId = UUID.randomUUID().toString();
         String username = "testUsername";
         String displayName = "Test Display Name";
@@ -40,8 +42,9 @@ public class ReplyServiceTest {
 
         // Assert
         Mockito.verify(mockReplyRepo, Mockito.times(1)).save(Mockito.anyString(),
-                Mockito.eq(stubbedReq.getReply()), Mockito.any(Date.class), Mockito.eq(imgUrl), Mockito.eq(validUserId),
-                Mockito.anyString(), Mockito.eq(username), Mockito.eq(displayName));
+                Mockito.eq(stubbedReq.getReply()), Mockito.any(Date.class), Mockito.eq(stubbedReq.getImgUrl()),
+                Mockito.eq(validUserId), Mockito.eq(stubbedReq.getPostId()), Mockito.eq(username),
+                Mockito.eq(displayName));
     }
 
     @Test
@@ -56,9 +59,8 @@ public class ReplyServiceTest {
         Post post = new Post(validPostId, new Date(2022,12,13), "first post",
                 null, user, "testUsername", "Test Display Name");
 
-        String imgUrl = null;
-        Reply reply = new Reply(UUID.randomUUID().toString(), "sample reply", new Date(), imgUrl, user, post,
-                "testUsername", "Test Display Name");
+        Reply reply = new Reply(UUID.randomUUID().toString(), "sample reply", new Date(), null, user,
+                post, "testUsername", "Test Display Name");
 
         stubbedReplies.add(reply);
 

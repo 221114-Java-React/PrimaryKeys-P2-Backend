@@ -12,7 +12,8 @@ import java.security.Key;
 import java.util.Date;
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class TokenServiceTest {
     private TokenService sut;
