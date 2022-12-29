@@ -5,13 +5,11 @@ import com.revature.sylvester.dtos.requests.UpdateProfileRequest;
 import com.revature.sylvester.entities.User;
 import com.revature.sylvester.entities.UserProfile;
 import com.revature.sylvester.repositories.UserProfileRepository;
-import com.revature.sylvester.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
 import java.util.UUID;
 
 @Service

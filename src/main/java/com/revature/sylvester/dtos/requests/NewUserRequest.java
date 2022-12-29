@@ -1,7 +1,6 @@
 package com.revature.sylvester.dtos.requests;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class NewUserRequest {
     private String username;
