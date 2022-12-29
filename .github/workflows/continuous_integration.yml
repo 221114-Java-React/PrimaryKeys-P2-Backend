@@ -42,7 +42,7 @@ jobs:
 #           source: "*"
 #           target: "deployment"
 
-      - name: Overwrite pem.key
+      - name: Overwrite key.pem
         uses: "DamianReeves/write-file-action@master"
         with:
           path: key.pem
@@ -54,7 +54,7 @@ jobs:
         run: |
           chmod 600 key.pem
           ls -l
-          ssh -i key.pem ${{ secrets.HOST }}@${{ secrets.HOST }} echo "GOT HERE"
+          ssh -i key.pem ${{ secrets.USERNAME }}@${{ secrets.HOST }} echo "GOT HERE"
 
 #       - name: Run Server
 #         uses: appleboy/ssh-action@v0.1.6
