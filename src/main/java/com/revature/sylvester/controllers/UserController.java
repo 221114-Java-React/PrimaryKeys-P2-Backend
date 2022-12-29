@@ -13,6 +13,7 @@ import com.revature.sylvester.utils.custom_exceptions.InvalidUserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -69,13 +70,27 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAll() {
-        return userService.getAllUsers();
+    public List<Principal> getAll() {
+        List<User> users = userService.getAllUsers();
+        List<Principal> principals = new ArrayList<>();
+
+        for(User user : users){
+            Principal currentPrincipal = new Principal(user.getUserId(), user.getUsername(), user.getEmail(),
+                    user.getRegistered(), user.isActive(), user.getRoleId());
+
+            principals.add(currentPrincipal);
+        }
+
+        return principals;
     }
 
     @GetMapping("/username")
-    public User getAllByUsername(@RequestParam String username) {
-        return userService.getUserByUsername(username);
+    public Principal getByUsername(@RequestParam String username) {
+        User user = userService.getUserByUsername(username);
+        Principal principal = new Principal(user.getUserId(), user.getUsername(), user.getEmail(),
+                user.getRegistered(), user.isActive(), user.getRoleId());
+
+        return principal;
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
