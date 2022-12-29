@@ -37,8 +37,8 @@ jobs:
           contents: |
             ${{ secrets.KEY }}
             
-#       - name: Build with Maven
-#         run: mvn clean install
+      - name: Build with Maven
+        run: mvn clean install
 
       - name: SCP Application JAR File to Deployment Server
         uses: appleboy/scp-action@master
@@ -50,14 +50,13 @@ jobs:
           source: "*"
           target: "deployment"
 
-#       - name: Run Server
-#         uses: appleboy/ssh-action@v0.1.6
-#         with:
-#           host: ${{ secrets.HOST }}
-#           username: ${{ secrets.USERNAME }}
-#           key: ${{ secrets.KEY }}
-#           port: ${{ secrets.PORT }}
-#           script: |
-#             cd deployment
-#             (make run && echo "Server Started")
-#             exit
+      - name: Run Server
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd deployment
+            (make run && echo "Server Started")
